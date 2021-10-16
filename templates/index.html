@@ -1,0 +1,149 @@
+<!--記得註釋--> 
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title id="recipe_name">首頁</title>
+	<script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+	<style>
+		 /*統一規範*/
+        body{
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        #main-cut{
+            position:absolute;
+        }
+
+        /*header設定*/
+        #header{
+            height:9vh;
+            width:100vw;
+            display:flex;
+            flex-direction:row;
+            justify-content:start;
+            align-items:center;
+            box-shadow:2px 2px 2px 2px #cccccc;
+            opacity:0.9;
+        }
+
+        #undo{
+            margin-left:40px;
+            margin-right:350px;
+        }
+
+        #head_font{
+            font-size:65px;
+        }
+
+        /*區塊範例*/
+        #Contents{
+            display:flex;
+            flex-direction:column;
+            justify-content:start;
+            align-items:center;
+            width:100vw;
+        }
+
+        #unite_font{
+            margin-left:20px;
+            font-size:50px;
+        }
+
+        /*主要區塊*/
+        #main_circle{
+            height:200px;
+            width:600px;
+            background-color:#3C3C3C;
+            border-radius:140px;
+            display:flex;
+            flex-direction:row;
+            justify-content:center;
+            align-items:center;
+            font-size:60px;
+            color:#F0F0F0;
+        }
+
+        #circle_wrap1{
+        	display:flex;
+            flex-direction:row;
+            justify-content:center;
+            align-items:center;
+            margin-top:150px;
+            margin-bottom:150px;
+        }
+
+        #circle_wrap2{
+        	display:flex;
+            flex-direction:row;
+            justify-content:center;
+            align-items:center;
+            margin-top:150px;
+            margin-bottom:150px;
+        }
+
+        #icon1{
+        	font-size:100px;
+        	color:#F0F0F0; 
+        	margin-right:30px;
+        }
+
+        #icon2{
+        	font-size:100px;
+        	color:#F0F0F0; 
+        	margin-left:30px;
+        }
+        
+	</style>
+	<!--藝術字體--> 
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+	<!--思源黑體--> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+	<!--jquery-->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+</head>
+
+<body style="background-color:#E0E0E0">
+	<div id="header" style="background-color:#3C3C3C">
+		<i id="undo"></i>
+		<div id="head_font" style="color:#FCFCFC">宅生活</div>
+	</div>
+	
+	<div id="main-cut">
+
+		<div id="Contents">	
+			<div id="circle_wrap2"><div id="main_circle"><i class="fas fa-book" id="icon1"></i>食譜目錄</div></div>
+			<div id="circle_wrap1"><div id="main_circle"><i class="fas fa-fish" id="icon1"></i>食材目錄</div></div>
+			<div id="circle_wrap2"><div id="main_circle"><i class="fas fa-user-alt" id="icon1"></i>登入/註冊</div></div>
+		</div>
+	</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+<script>
+	//變數區
+	let word1 = document.getElementById('unite1_font');
+	let word2 = document.getElementById('unite2_font');
+
+	var firebaseConfig = {
+	    apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+	    authDomain: "test-4fa88.firebaseapp.com",
+	    databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+	    projectId: "test-4fa88",
+	    storageBucket: "test-4fa88.appspot.com",
+	    messagingSenderId: "951903532283",
+	    appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+	    measurementId: "G-NSP6DRS2MS"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+
+	var db=firebase.firestore();
+
+</script>
+</html>

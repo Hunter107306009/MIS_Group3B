@@ -1,0 +1,338 @@
+<!--記得註釋-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>跨站登入頁</title>
+    <script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+    <style>
+        /*統一規範*/
+        body{
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        #main-cut{
+            position:absolute;
+        }
+
+        /*header設定*/
+        #header{
+            height:9vh;
+            width:100vw;
+            display:flex;
+            flex-direction:row;
+            justify-content:start;
+            align-items:center;
+            box-shadow:2px 2px 2px 2px #cccccc;
+            opacity:0.9;
+        }
+
+        #undo{
+            margin-left:40px;
+            margin-right:250px;
+        }
+
+        #head_font{
+            font-size:65px;
+        }
+
+
+        /*區塊範例*/
+        #Contents{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            width:100vw;
+            height:90vh;
+        }
+
+        #unite_font{
+            margin-left:20px;
+            font-size:50px;
+        }
+
+        /*登入區塊*/
+        #small_menu_frame{
+            height:60vh;
+            width:95%;
+            border-radius:20px;
+            border-color:#E0E0E0;
+            border-style:solid;
+            display:flex;
+            flex-direction:column;
+            justify-content:start;
+            align-items:center;
+            margin-bottom:20px;
+            margin-top:20px;
+            box-shadow:2px 2px 2px 2px #cccccc;
+        }
+
+        #input_master_wrap{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+
+        #lock_wrap{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            height:350px;
+            width:350px;
+            border-style:solid;
+            border-radius:50%;
+            margin-bottom:50px;
+            margin-top:50px;
+            border-color:#BEBEBE;
+            border-width:5px;
+            box-shadow:2px 2px 2px 2px #cccccc;
+        }
+
+        #lock{
+            margin:20px;
+            font-size:200px;
+            color:rgba(142,142,142,0.7);
+        }
+
+        #test_input{
+            height:50px;
+            width:650px;
+            margin-bottom:5px;
+            margin-top:5px;
+            border-style:solid;
+            font-size:25px;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        #formal_input1{
+            height:100px;
+            width:650px;
+            margin-bottom:5px;
+            margin-top:5px;
+            border-style:solid;
+            font-size:50px;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        #formal_input2{
+            height:100px;
+            width:650px;
+            margin-bottom:5px;
+            margin-top:5px;
+            border-style:solid;
+            font-size:50px;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        #formal_input-placeholder{
+            color:rgba(142,142,142,0.7);
+        }
+
+        #verification_frame{
+            display:flex;
+            flex-direction:row;
+            justify-content:center;
+            align-items:center;
+        }
+
+        #verification_input{
+            height:100px;
+            width:300px;
+            margin-bottom:5px;
+            margin-top:20px;
+            margin-right:10px;
+            border-style:solid;
+            font-size:50px;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        #picture{
+            margin-bottom:5px;
+            margin-top:20px;
+            margin-right:10px;
+        }
+
+        #myButton{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            width:300px;
+            height:70px;
+            box-shadow: 3px 4px 0px 0px #EA7500;
+            background-color:#FF9224;
+            border-radius:5px;
+            border-style:solid;
+            border:1px solid #FF9224;
+            cursor:pointer;
+            color:#ffffff;
+            font-size:40px;
+            padding:7px 25px;
+            margin-left:130px;
+            margin-right:130px;
+            margin-top:30px;
+            margin-bottom:30px;
+        }
+
+        /*側邊選單*/
+        #side-menu-frame{
+            position:absolute;
+            display:flex;
+            flex-direction:row;
+            justify-content:start;
+            height:91vh;
+        }
+
+        #side-menu{
+            width:30vw;
+            height:100%;
+            background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+            display:none;
+            flex-direction:column;
+            align-items:center;
+            box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+        }
+
+        #side-menu nav a{
+            display:block;
+            padding:30px;
+            color:#FCFCFC;
+            text-decoration:none;
+            font-size:30px;
+            border-bottom:outset;
+            
+        }
+
+        #side-paste{
+            width:70vw;
+            height:100%;
+            background-color:#6C6C6C;
+            display:none;
+            opacity:0.4;
+        }
+    </style>
+    <!--藝術字體-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+    <!--思源黑體-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+</head>
+
+<div id="new_id" style="display:none; visibility:hidden;">{{id}}</div>
+<body style="background-color:#E0E0E0">
+    <div id="header" style="background-color:#3C3C3C">
+        <i class="fas fa-bars" id="undo" style="color:#FCFCFC; font-size:50px;"></i>
+        <div id="head_font" style="color:#FCFCFC">跨站登入頁</div>
+    </div>
+    <form action="/result" method="POST">
+        <div id="main-cut">
+            <div id="Contents">
+                <div id="small_menu_frame" style="background-color:#FCFCFC;">
+                    <div id="input_master_wrap">
+                        <div id="lock_wrap"><i id="lock" class="fas fa-user-lock"></i></div>
+                        <input id="test_input" type="text" name="new_id" placeholder="client_id" readonly unselectable="on" value="{{id}}">
+                        <input id="formal_input1" type="text" name="account" placeholder="請輸入PCHOME的帳號">
+                        <input id="formal_input2" type="password" name="passwd" placeholder="請輸入PCHOME的密碼">
+                        
+                        <input type="submit" id="myButton"></div>
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+
+    <div id="side-menu-frame">
+        <div id="side-menu">
+            <nav>
+                <a href="#">
+                    <i class="fas fa-home"></i> 首頁
+                </a>
+                <a href="#">
+                    <i class="fas fa-book"></i> 食譜目錄
+                </a>
+                <a href="#">
+                    <i class="fas fa-fish"></i> 食材目錄
+                </a>
+                <a href="#">
+                    <i class="fas fa-heart"></i> 我的最愛
+                </a>
+                <a href="#">
+                    <i class="fas fa-share-square"></i> 分享食譜
+                </a>
+                <a href="#">
+                    <i class="fas fa-shopping-cart"></i> 購物車
+                </a>
+            </nav>
+        </div>
+        <div id="side-paste">
+
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script>
+        let word1 = document.getElementById('unite1_font');
+        let word2 = document.getElementById('unite2_font');
+
+        //firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+            authDomain: "test-4fa88.firebaseapp.com",
+            databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "test-4fa88",
+            storageBucket: "test-4fa88.appspot.com",
+            messagingSenderId: "951903532283",
+            appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+            measurementId: "G-NSP6DRS2MS"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        let formal_input1 = document.getElementById('formal_input1');
+        let formal_input2 = document.getElementById('formal_input2');
+        let verification_input = document.getElementById('verification_input');
+        let test_input = document.getElementById('test_input');
+
+        function storedata() {
+            db.collection("帳號密碼").doc("用戶" + test_input.value + "的帳號密碼暫存").set({
+                帳號: formal_input1.value,
+                密碼: formal_input1.value,
+                驗證碼: verification_input.value
+            })
+        }
+
+        //下載驗證碼圖片
+        let picture = document.getElementById('picture');
+		const id = document.getElementById("new_id").innerHTML;
+		console.log(id);
+
+		const fileRef = firebase.storage().ref("captcha" + id.toString());
+		fileRef.getDownloadURL().then(function(url) {
+			picture.src = url;
+		})
+
+        //帳號密碼傳輸按鈕
+        let myButton = document.getElementById('myButton');
+        myButton.addEventListener('click', function() {
+            if (formal_input1.value != "" & formal_input2.value != "" & verification_input.value != "" & test_input.value != "") {
+                storedata();
+                alert("資料傳輸成功");
+            } else {
+                alert("尚有欄位未填寫完畢");
+            }
+        });
+    </script>
+</body>
+</body>
+
+</html>

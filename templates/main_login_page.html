@@ -1,0 +1,530 @@
+<!--記得註釋--> 
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>登入會員</title>
+	<script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+	<style>
+		/*統一規範*/
+		body{
+			font-family: 'Noto Sans TC', sans-serif;
+		}
+
+		#main-cut{
+			position:absolute;
+		}
+
+		/*header設定*/
+		#header{
+			height:9vh;
+			width:100vw;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			box-shadow:2px 2px 2px 2px #cccccc;
+			opacity:0.9;
+		}
+
+		#undo{
+			margin-left:40px;
+			margin-right:250px;
+		}
+
+		#head_font{
+			font-size:65px;
+		}
+
+
+		/*區塊範例*/
+		#Contents{
+			display:flex;
+			flex-direction:column;
+			justify-content:center;
+			align-items:center;
+			width:100vw;
+			height:91vh;
+			margin-top: 0px;
+			overflow: auto;
+			scrollbar-width: none;
+		}
+
+		#unite_font{
+			/*margin-left:20px;*/
+			font-size:80px;
+			position: relative;
+			text-align: center;
+			margin-top: -80px;
+		}
+
+		a{
+			text-decoration: none;
+			padding: 10px;
+		}
+
+		img{
+			width: 500px;
+			height: 500px;
+			border-radius: 50%;
+			margin-top: 30px;
+			vertical-align: middle;
+		}
+		/*微型選單部分*/
+		#small_menu_frame{
+			height:25vh;
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			margin-bottom:20px;
+			margin-top:20px;
+			box-shadow:2px 2px 2px 2px #cccccc;
+			white-space: nowrap;
+			overflow: auto;
+		}
+
+		/*側邊選單*/
+		#side-menu-frame{
+			position:absolute;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			height:91vh;
+		}
+
+		#side-menu{
+			width:30vw;
+			height:100%;
+			background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+			display:none;
+			flex-direction:column;
+			align-items:center;
+			box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+		}
+
+		#side-menu nav a{
+			display:block;
+			padding:30px;
+			color:#FCFCFC;
+			text-decoration:none;
+			font-size:30px;
+			border-bottom:outset;
+			
+		}
+
+		#side-paste{
+			width:70vw;
+			height:100%;
+			background-color:#6C6C6C;
+			display:none;
+			opacity:0.4;
+		}
+
+		.login{
+			width: 65vw;
+			height: 80vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.form{
+			width: 100%;
+			color: #3C3C3C;
+		}
+
+		.form .group{
+			display:flex;
+			margin-bottom: 20px;
+		}
+
+		.form label{
+			line-height: 2;
+			font-size: 50px;
+		}
+
+		.form input{
+			width: 100%;
+			border: 1px solid #aaa;
+			line-height: 2;
+			border-radius: 5px;
+			font-size: 50px;
+		}
+
+		.form .btn-group{
+			font-size: 0;
+			margin-top: 50px;
+		}
+
+
+
+		/*後加*/
+		.user_id{
+			border-radius:10px;
+			text-indent:10px;
+			padding-left:10px;
+            font-size:40px;
+            height:80px;
+		}
+
+		.user_password{
+			border-radius:10px;
+			text-indent:10px;
+			padding-left:10px;
+            font-size:40px;
+            height:80px;
+		}
+
+		.user_id::placeholder {
+            color:#ADADAD;
+            padding-left:10px;
+            font-size:40px;
+        }
+
+        .user_password::placeholder {
+            color:#ADADAD;
+            padding-left:10px;
+            font-size:40px;
+        }
+
+		#block{
+			display:flex;
+			flex-direction:row;
+			justify-content:center;
+			align-items:center;
+			margin-bottom:40px;
+			height:70px;
+			border-bottom:solid;
+			border-color:#EA7500;
+		}
+
+		#block_1{
+			display:flex;
+			flex-direction:row;
+			justify-content:center;
+			align-items:center;
+			width:50%;
+			height:100%;
+			background-color:#EA7500;
+			font-size:35px;
+			color:#FCFCFC;
+		}
+
+
+		#block_2{
+			display:flex;
+			flex-direction:row;
+			justify-content:center;
+			align-items:center;
+			width:50%;
+			height:100%;
+			background-color:#E0E0E0;
+			font-size:35px;
+			color:#3C3C3C;
+		}
+
+		#forgot{
+			width:100%;
+			display:flex;
+			flex-direction:row;
+			justify-content:center;
+			align-items:center;
+			margin-top:20px;
+			font-size:30px;
+			text-decoration:underline;	
+		}
+
+		.btn-group{
+			display:flex;
+			align-items:center;
+			justify-content:center;
+		}
+
+		.btn{
+			font-size: 45px;
+			border-radius: 10px;
+			border: none;
+			background-color: #FF9224;
+			width: 50vw;
+			height: 5vh;
+			padding: 10px 0;
+			color: #fff;
+			font-weight:bold;
+		}
+
+		#display{
+			display:flex;
+			flex-direction:column;
+			justify-content:start;
+			align-items:center;
+			height:80%;
+			width:90%;
+			background-color:hsla(1,100%,100%,0.65);
+			border-radius:30px;
+		}
+
+	</style>
+	<!--藝術字體--> 
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+	<!--思源黑體--> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+</head>
+
+<body style="background-color:#E0E0E0">
+	<div id="header" style="background-color:#FF5809">
+		<i class="fas fa-bars" id="undo" style="color:#FCFCFC; font-size:50px;"></i>
+		<div id="head_font" style="color:#FCFCFC">登入會員</div>
+	</div>
+
+	<div id="main-cut">
+		<div id="Contents" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/test-4fa88.appspot.com/o/2021-10-15_17-56-13.png?alt=media&token=6a7fab6c-b4d5-4f5a-83b0-0bec746bf895'); background-size:100vw 100vh;">
+			<div id="display">
+			<img src="https://firebasestorage.googleapis.com/v0/b/test-4fa88.appspot.com/o/2021-10-15_17-33-34-removebg-preview.png?alt=media&token=f50bc48e-79c4-42e3-ac1b-9b8604cf4268">
+			<div class="login">
+				<form class="form">
+					<div id="block">
+						<div id="block_1">
+							登入
+						</div>
+						<div id="block_2">
+							註冊
+						</div>
+					</div>
+					<div class="group">
+						<input type="text" class="user_id" id="other1" style="width:302px; display:none;" placeholder="姓氏">
+						<input type="text" class="user_id" id="other2" style="width:302px; display:none;" placeholder="名字">
+					</div>
+					<div class="group">
+						<input type="text" class="user_id" id="other3" style="width:195px; display:none;" placeholder="出生年">
+						<input type="text" class="user_id" id="other4" style="width:195px; display:none;" placeholder="出生月">
+						<input type="text" class="user_id" id="other5" style="width:195px; display:none;" placeholder="出生日">
+					</div>
+					<div class="group">
+						<input type="text" class="user_id" id="other6" style="width:622px; border-radius:20px;" placeholder="輸入帳號 / 電子郵件">
+					</div>
+					<div class="group">
+						<input type="password" class="user_password" id="other7" style="width:622px; border-radius:20px;" placeholder="輸入密碼">
+					</div>
+					<div class="group">
+						<input type="password" class="user_password" id="other8" style="width:622px; display:none;" placeholder="確認密碼">
+					</div>
+					<div class="btn-group">
+						<button type="button" class="btn" id="enter">確定</button>
+					</div>
+					<div id="forgot">
+						忘記密碼
+					</div>
+				</form>
+			</div>
+		</div>
+		</div>
+	</div>
+
+	
+	<div id="side-menu-frame">
+		<div id="side-menu">
+			<nav>
+				<a href="#">
+					<i class="fas fa-home"></i>
+					首頁
+				</a>
+				<a href="#">
+					<i class="fas fa-book"></i>
+					食譜目錄
+				</a>
+				<a href="#">
+					<i class="fas fa-fish"></i>
+					食材目錄
+				</a>
+				<a href="#">
+					<i class="fas fa-heart"></i>
+					我的最愛
+				</a>
+				<a href="#">
+					<i class="fas fa-share-square"></i>
+					分享食譜
+				</a>
+				<a href="#">
+					<i class="fas fa-shopping-cart"></i>
+					購物車
+				</a>
+			</nav>
+		</div>
+		<div id="side-paste">
+
+		</div>
+	</div>	
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.js"></script>
+<!--jquery-->
+<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+
+<script>
+	var firebaseConfig = {
+  		apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+  		authDomain: "test-4fa88.firebaseapp.com",
+  		databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+  		projectId: "test-4fa88",
+  		storageBucket: "test-4fa88.appspot.com",
+  		messagingSenderId: "951903532283",
+  		appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+  		measurementId: "G-NSP6DRS2MS"
+		};
+
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+  	const db = firebase.firestore();
+
+	let count=0;
+	let block_1 = document.getElementById('block_1');
+	let block_2 = document.getElementById('block_2');
+	let other1 = document.getElementById('other1');
+	let other2 = document.getElementById('other2');
+	let other3 = document.getElementById('other3');
+	let other4 = document.getElementById('other4');
+	let other5 = document.getElementById('other5');
+	let other6 = document.getElementById('other6');
+	let other7 = document.getElementById('other7');
+	let other8 = document.getElementById('other8');
+	block_1.addEventListener('click', function(){
+
+		count=count+1;
+
+		if (count%2==0){
+			block_1.style.cssText  = 'background-color:#EA7500; color:#FCFCFC;';
+			block_2.style.cssText  = 'background-color:#E0E0E0; color:#3C3C3C;';
+			other1.style.cssText = 'display:none; width:302px;';
+			other2.style.cssText = 'display:none; width:302px;';
+			other3.style.cssText = 'display:none; width:195px;';
+			other4.style.cssText = 'display:none; width:195px;';
+			other5.style.cssText = 'display:none; width:195px;';
+			other8.style.cssText = 'display:none; width:622px;';
+		}
+
+		if (count%2==1){
+			block_1.style.cssText  = 'background-color:#E0E0E0; color:#3C3C3C;';
+			block_2.style.cssText  = 'background-color:#EA7500; color:#FCFCFC;';
+			other1.style.cssText = 'display:flex; width:302px;';
+			other2.style.cssText = 'display:flex; width:302px;';
+			other3.style.cssText = 'display:flex; width:195px;';
+			other4.style.cssText = 'display:flex; width:195px;';
+			other5.style.cssText = 'display:flex; width:195px;';
+			other8.style.cssText = 'display:flex; width:622px;';
+		}
+
+	});
+
+	block_2.addEventListener('click', function(){
+
+		count=count+1;
+
+		if (count%2==0){
+			block_1.style.cssText  = 'background-color:#EA7500; color:#FCFCFC;';
+			block_2.style.cssText  = 'background-color:#E0E0E0; color:#3C3C3C;';
+			other1.style.cssText = 'display:none; width:302px;';
+			other2.style.cssText = 'display:none; width:302px;';
+			other3.style.cssText = 'display:none; width:195px;';
+			other4.style.cssText = 'display:none; width:195px;';
+			other5.style.cssText = 'display:none; width:195px;';
+			other8.style.cssText = 'display:none; width:622px;';
+		}
+
+		if (count%2==1){
+			block_1.style.cssText  = 'background-color:#E0E0E0; color:#3C3C3C;';
+			block_2.style.cssText  = 'background-color:#EA7500; color:#FCFCFC;';
+			other1.style.cssText = 'display:flex; width:302px;';
+			other2.style.cssText = 'display:flex; width:302px;';
+			other3.style.cssText = 'display:flex; width:195px;';
+			other4.style.cssText = 'display:flex; width:195px;';
+			other5.style.cssText = 'display:flex; width:195px;';
+			other8.style.cssText = 'display:flex; width:622px;';
+		}
+
+	});
+
+	//合併部分
+	let email =  document.getElementById("other6");
+  	let password =  document.getElementById("other8");
+
+	function signUpcheck(){
+ 		alert("開始執行signUp");
+		var docRef = db.collection("測試").doc(email.value);
+		//這裡根本沒有執行
+  		docRef.get().then((doc) => {
+  			alert("至少我signUp有進來過");
+      		if (doc.exists){
+          		alert("帳號已存在");
+      		}
+      		else{
+          		alert("帳號建立成功");
+          		db.collection('測試').doc(email.value).set({
+          			帳號: email.value,
+          			密碼: md5(password.value),
+  	})
+      }
+  }).catch((error) => {
+      console.log("Error getting document:", error);
+  });
+  
+  
+
+  alert("done");
+ 
+}
+
+  	function logincheck(){
+  		alert("開始執行login");
+  		//這裡根本沒有執行
+  		db.collection("測試").doc(email.value).onSnapshot((doc) => {
+  				alert("至少我login有進來過");
+        		console.log(doc.data()["密碼"]);
+        		if (md5(password.value)==doc.data()["密碼"]){
+        			alert("登入成功");
+        			Cookies.set('acc', email.value);
+        			console.log(Cookies.get())
+      			}
+      			else{
+      				alert("帳號或密碼錯誤");
+      			}
+    		});
+    	//這裡根本沒有執行
+    	alert("結束login");
+   	}
+
+	let enter = document.getElementById("enter");
+   	enter.addEventListener('click', function(){
+   		if (email.value != "" & password.value != ""){
+            if (count%2==0){
+            	logincheck();
+            }
+            else if (count%2==1){
+            	signUpcheck();
+            }
+            else{
+            	alert("系統正在維護，請稍後再登錄");
+            }
+        } 
+
+        else{
+        	alert("尚有欄位未填寫完畢");
+        }
+   	});
+
+	
+
+
+
+</script>
+</html>

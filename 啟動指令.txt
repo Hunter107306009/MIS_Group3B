@@ -1,0 +1,13 @@
+cd desktop/copy/contoso
+.\\venv\\scripts\\activate
+flask run
+
+http://127.0.0.1:5000/book_page
+http://127.0.0.1:5000/login_page
+http://127.0.0.1:5000/choose_page
+
+http://127.0.0.1:5000/food_page
+http://127.0.0.1:5000/food_page_1
+
+http://127.0.0.1:5000/food_page_sheeTest
+http://127.0.0.1:5000/main_login_page

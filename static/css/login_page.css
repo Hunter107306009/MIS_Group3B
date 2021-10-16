@@ -1,0 +1,209 @@
+/*記得註釋*/
+
+/*統一規範*/
+body{
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
+#main-cut{
+	position:absolute;
+}
+
+/*header設定*/
+#header{
+	height:9vh;
+	width:100vw;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	box-shadow:2px 2px 2px 2px #cccccc;
+	opacity:0.9;
+}
+
+#undo{
+	margin-left:40px;
+	margin-right:250px;
+}
+
+#head_font{
+	font-size:65px;
+}
+
+
+/*區塊範例*/
+#Contents{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	width:100vw;
+	height:90vh;
+}
+
+#unite_font{
+	margin-left:20px;
+	font-size:50px;
+}
+
+/*登入區塊*/
+#small_menu_frame{
+	height:60vh;
+	width:95%;
+	border-radius:20px;
+	border-color:#E0E0E0;
+	border-style:solid;
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:center;
+	margin-bottom:20px;
+	margin-top:20px;
+	box-shadow:2px 2px 2px 2px #cccccc;
+}
+
+#input_master_wrap{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+
+#lock_wrap{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	height:350px;
+	width:350px;
+	border-style:solid;
+	border-radius:50%;
+	margin-bottom:50px;
+	margin-top:50px;
+	border-color:#BEBEBE;
+	border-width:5px;
+	box-shadow:2px 2px 2px 2px #cccccc;
+}
+
+#lock{
+	margin:20px;
+	font-size:200px;
+	color:rgba(142,142,142,0.7);
+}
+
+#test_input{
+	height:50px;
+	width:650px;
+	margin-bottom:5px;
+	margin-top:5px;
+	border-style:solid;
+	font-size:25px;
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
+#formal_input1{
+	height:100px;
+	width:650px;
+	margin-bottom:5px;
+	margin-top:5px;
+	border-style:solid;
+	font-size:50px;
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
+#formal_input2{
+	height:100px;
+	width:650px;
+	margin-bottom:5px;
+	margin-top:5px;
+	border-style:solid;
+	font-size:50px;
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
+#formal_input-placeholder{
+	color:rgba(142,142,142,0.7);
+}
+
+#verification_frame{
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+}
+
+#verification_input{
+	height:100px;
+	width:300px;
+	margin-bottom:5px;
+	margin-top:20px;
+	margin-right:10px;
+	border-style:solid;
+	font-size:50px;
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
+#picture{
+	margin-bottom:5px;
+	margin-top:20px;
+	margin-right:10px;
+}
+
+#myButton{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	width:300px;
+	height:70px;
+	box-shadow: 3px 4px 0px 0px #EA7500;
+	background-color:#FF9224;
+	border-radius:5px;
+	border-style:solid;
+	border:1px solid #FF9224;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:40px;
+	padding:7px 25px;
+	margin-left:130px;
+	margin-right:130px;
+	margin-top:30px;
+	margin-bottom:30px;
+}
+
+/*側邊選單*/
+#side-menu-frame{
+	position:absolute;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	height:91vh;
+}
+
+#side-menu{
+	width:30vw;
+	height:100%;
+	background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+	display:none;
+	flex-direction:column;
+	align-items:center;
+	box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+}
+
+#side-menu nav a{
+	display:block;
+	padding:30px;
+	color:#FCFCFC;
+	text-decoration:none;
+	font-size:30px;
+	border-bottom:outset;
+	
+}
+
+#side-paste{
+	width:70vw;
+	height:100%;
+	background-color:#6C6C6C;
+	display:none;
+	opacity:0.4;
+}

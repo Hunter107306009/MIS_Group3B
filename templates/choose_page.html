@@ -1,0 +1,713 @@
+<!--記得註釋-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>方案選擇</title>
+    <script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+    <style>
+        /*統一規範*/
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        
+        #main-cut {
+            position: absolute;
+        }
+        /*header設定*/
+        
+        #header {
+            height: 9vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+            box-shadow: 2px 2px 2px 2px #cccccc;
+            opacity: 0.9;
+        }
+        
+        #undo {
+            margin-left: 40px;
+            margin-right: 250px;
+        }
+        
+        #head_font {
+            font-size: 65px;
+        }
+        /*區塊範例*/
+        
+        #Contents {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            width: 100vw;
+        }
+        
+        #unite_font {
+            margin-left: 20px;
+            font-size: 50px;
+        }
+        /*微型選單部分*/
+        
+        #small_menu_frame {
+            max-height: 88vh;
+            width: 95%;
+            border-radius: 20px;
+            border-color: #E0E0E0;
+            border-style: solid;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 2px 2px 2px 2px #cccccc;
+            overflow-y: auto;
+        }
+        /*警示區塊文字*/
+        
+        #Exclamation_frame {
+            height: 180px;
+            width: 95%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            background-color: #FFE66F;
+            box-shadow: 2px 2px 2px 2px #D9B300;
+            margin-top: 20px;
+        }
+        
+        #Exclamation_icon {
+            font-size: 50px;
+            margin-left: 20px;
+            margin-right: 20px;
+            color: #977C00;
+        }
+        
+        #Exclamation_font {
+            color: #977C00;
+            font-size: 30px;
+            margin-left: 10px;
+        }
+        /*推薦組合包區塊*/
+        
+        #formula1 {
+            border-color: #F0F0F0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            width: 90%;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        
+        #formula2 {
+            border-color: #F0F0F0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            width: 90%;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        
+        #formula3 {
+            border-color: #F0F0F0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            width: 90%;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        
+        #level1 {
+            width: 450px;
+            margin-bottom: 30px;
+        }
+        
+        #level1_frame {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #level2 {
+            margin-left: 30px;
+        }
+        
+        #level3 {
+            margin-top: 10px;
+            margin-left: 30px;
+        }
+        
+        .item {
+            font-size: 35px;
+            border-bottom-style: outset;
+            border-width: 2px;
+            border-color: #F0F0F0;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+            width: 90%;
+            margin-left: 40px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .item_name {
+            width: 80%;
+        }
+        
+        .item_prize {
+            font-size: 35px;
+            color: #FF2D2D
+        }
+        
+        #formula_font {
+            font-size: 40px;
+            margin-left: 10px;
+            width: 90%;
+        }
+        
+        #myButton {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            height: 70px;
+            box-shadow: 3px 4px 0px 0px #EA7500;
+            background-color: #FF9224;
+            border-radius: 5px;
+            border: 1px solid #FF9224;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 40px;
+            padding: 7px 25px;
+            margin-left: 130px;
+            margin-right: 130px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .box {
+            height: 50px;
+            width: 50px;
+            margin-left: 12px;
+        }
+        /*側邊選單*/
+        
+        #side-menu-frame {
+            position: absolute;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            height: 91vh;
+        }
+        
+        #side-menu {
+            width: 30vw;
+            height: 100%;
+            background-image: linear-gradient(0deg, #8E8E8E, #3C3C3C);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 10px 0px 10px hsla(240, 40%, 20%, .6);
+        }
+        
+        #side-menu nav a {
+            display: block;
+            padding: 30px;
+            color: #FCFCFC;
+            text-decoration: none;
+            font-size: 30px;
+            border-bottom: outset;
+        }
+        
+        #side-paste {
+            width: 70vw;
+            height: 100%;
+            background-color: #6C6C6C;
+            display: none;
+            opacity: 0.4;
+        }
+    </style>
+    <!--藝術字體-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+    <!--思源黑體-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <!--cookie管理套件-->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+</head>
+
+<div id="results" style="display:none; visibility:hidden;">{{products}}</div>
+<form action="/login_page" method="POST">
+    <input id="result_index" type="text" name="index" style="display:none; visibility:hidden;" readonly unselectable="on" value="{{index}}">
+    <!--<div id="result_index" style="display:none; visibility:hidden;">{{index}}</div> -->
+
+    <body style="background-color:#E0E0E0">
+        <div id="header" style="background-color:#3C3C3C">
+            <i class="fas fa-bars" id="undo" style="color:#FCFCFC; font-size:50px;"></i>
+            <div id="head_font" style="color:#FCFCFC">方案選擇</div>
+        </div>
+
+        <div id="main-cut">
+            <div id="Contents">
+                <div id="Exclamation_frame">
+                    <i class="fas fa-exclamation-circle" id="Exclamation_icon"></i>
+                    <div id="Exclamation_font">我們根據您想添購的食材，在現有的合作電商中，整理出幾個優惠的購買組合推薦給您，若想要更改組合包的內容，請點選下方區塊中的個別食材，可以進入進階選單更改。</div>
+                </div>
+
+                <div id="small_menu_frame" style="background-color:#FCFCFC;">
+                    <div id="formula1">
+                        <div id="level1_frame">
+                            <div id="level1" style="font-size:60px;">熊媽媽</div>
+                            <div id="checkbox_annotation" style="font-size:25px; color:#8E8E8E;">(勾選以選擇此推薦方案)</div>
+                            <input type="checkbox" id="box1" name="box" class="box" value="1" onclick="box1F()">
+                        </div>
+                        <div id="level2" style="font-size:40px;">商品品項 :</div>
+
+                        <script>
+                            function JSONLength(obj) {
+                                let size = 0,
+                                    key;
+                                for (key in obj) {
+                                    if (obj.hasOwnProperty(key)) {
+                                        size++;
+                                    }
+                                }
+                                return size;
+                            };
+
+                            let rs = document.getElementById("results").innerHTML;
+                            rs = rs.replace(/\'/g, "\"");
+                            console.log(rs);
+                            let rs_JSON = JSON.parse(rs);
+
+                            //讀取交換食材
+                            if (Cookies.get("CHANGE_number") == undefined) {} else {
+                                for (i = 1; i <= parseInt(Cookies.get("CHANGE_number")); i++) {
+                                    rs_JSON[Cookies.get("CHANGE_from_" + i.toString())][Cookies.get("CHANGE_number_" + i.toString())]["name"] = Cookies.get("CHANGE_name_" + i.toString());
+                                    rs_JSON[Cookies.get("CHANGE_from_" + i.toString())][Cookies.get("CHANGE_number_" + i.toString())]["price"] = Cookies.get("CHANGE_price_" + i.toString());
+                                    rs_JSON[Cookies.get("CHANGE_from_" + i.toString())][Cookies.get("CHANGE_number_" + i.toString())]["link"] = Cookies.get("CHANGE_link_" + i.toString());
+                                }
+                            }
+
+                            let rs_element_1 = JSONLength(rs_JSON["happyshopping"]);
+                            var total = 0;
+
+                            let formula1 = document.getElementById("formula1");
+                            for (i = 0; i < rs_element_1; i++) {
+                                var div = document.createElement("div");
+                                div.setAttribute("id", "itemF1_C" + i.toString());
+                                div.setAttribute("class", "item");
+                                formula1.appendChild(div);
+                                var item = document.getElementById("itemF1_C" + i.toString());
+                                var div = document.createElement("div");
+                                div.setAttribute("class", "item_name");
+                                var rg_name = rs_JSON["happyshopping"][i]["name"];
+                                div.innerHTML = (i + 1).toString() + "." + rg_name.toString();
+                                item.appendChild(div);
+
+                                var div = document.createElement("div");
+                                div.setAttribute("class", "item_prize");
+                                var rg_dollar = rs_JSON["happyshopping"][i]["price"];
+                                div.innerHTML = rg_dollar.toString() + "元";
+                                total = parseInt(total) + parseInt(rg_dollar);
+                                item.appendChild(div);
+
+                            }
+                        </script>
+
+                        <div id="level3" style="font-size:40px;">總金額 :</div>
+                        <script>
+                            var item = document.createElement("div");
+                            item.setAttribute("class", "item");
+                            item.setAttribute("style", "font-size:35px;");
+                            var item_name = document.createElement("div");
+                            item_name.setAttribute("class", "item_name");
+                            var item_prize = document.createElement("div");
+                            item_prize.setAttribute("class", "item_prize");
+                            item_prize.setAttribute("style", "font-size:40px; color:#FF2D2D;");
+                            item_prize.innerHTML = total.toString() + "元";
+                            item.appendChild(item_name);
+                            item.appendChild(item_prize);
+                            formula1.appendChild(item);
+                        </script>
+
+                    </div>
+                </div>
+
+                <div id="small_menu_frame" style="background-color:#FCFCFC;">
+                    <div id="formula2">
+                        <div id="level1_frame">
+                            <div id="level1" style="font-size:60px;">Pchome</div>
+                            <div id="checkbox_annotation" style="font-size:25px; color:#8E8E8E;">(勾選以選擇此推薦方案)</div>
+                            <input type="checkbox" id="box2" name="box" class="box" value="2" onclick="box2F()">
+                        </div>
+
+                        <div id="level2" style="font-size:40px;">商品品項 :</div>
+
+                        <script>
+                            let formula2 = document.getElementById("formula2");
+                            let rs_element_2 = JSONLength(rs_JSON["pchome"]);
+                            var total = 0;
+                            for (i = 0; i < rs_element_2; i++) {
+                                var div = document.createElement("div");
+                                div.setAttribute("id", "itemF2_C" + i.toString());
+                                div.setAttribute("class", "item");
+                                formula2.appendChild(div);
+                                var item = document.getElementById("itemF2_C" + i.toString());
+                                var div = document.createElement("div");
+                                div.setAttribute("class", "item_name");
+                                var rg_name = rs_JSON["pchome"][i]["name"];
+                                div.innerHTML = (i + 1).toString() + "." + rg_name.toString();
+                                item.appendChild(div);
+
+                                var div = document.createElement("div");
+                                div.setAttribute("class", "item_prize");
+                                var rg_dollar = rs_JSON["pchome"][i]["price"];
+                                div.innerHTML = rg_dollar.toString() + "元";
+                                total = parseInt(total) + parseInt(rg_dollar);
+                                item.appendChild(div);
+                            }
+                        </script>
+
+                        <div id="level3" style="font-size:40px;">總金額 :</div>
+
+                        <script>
+                            var item = document.createElement("div");
+                            item.setAttribute("class", "item");
+                            item.setAttribute("style", "font-size:35px;");
+                            var item_name = document.createElement("div");
+                            item_name.setAttribute("class", "item_name");
+                            var item_prize = document.createElement("div");
+                            item_prize.setAttribute("class", "item_prize");
+                            item_prize.setAttribute("style", "font-size:40px; color:#FF2D2D;");
+                            item_prize.innerHTML = total.toString() + "元";
+                            item.appendChild(item_name);
+                            item.appendChild(item_prize);
+                            formula2.appendChild(item);
+                        </script>
+
+                    </div>
+                </div>
+
+                <div id="small_menu_frame" style="background-color:#FCFCFC;">
+                    <div id="formula3">
+                        <div id="level1_frame">
+                            <div id="level1" style="font-size:60px;">蝦皮生鮮超市</div>
+                            <div id="checkbox_annotation" style="font-size:25px; color:#8E8E8E;">(勾選以選擇此推薦方案)</div>
+                            <input type="checkbox" id="box3" class="box" name="box" value="3" onclick="box3F()">
+                        </div>
+                        <div id="level2" style="font-size:40px;">商品品項 :</div>
+                        <script>
+                            let formula3 = document.getElementById("formula3");
+                            let rs_element_3 = JSONLength(rs_JSON["pchome"]);
+                            var total = 0;
+                            for (i = 0; i < rs_element_3; i++) {
+                                var div = document.createElement("div");
+                                div.setAttribute("id", "itemF3_C" + i.toString());
+                                div.setAttribute("class", "item");
+                                formula3.appendChild(div);
+                                var item = document.getElementById("itemF3_C" + i.toString());
+                                var div = document.createElement("div");
+                                div.setAttribute("class", "item_name");
+                                var rg_name = rs_JSON["shopee"][i]["name"];
+                                div.innerHTML = (i + 1).toString() + "." + rg_name.toString();
+                                item.appendChild(div);
+
+                                var div = document.createElement("div");
+                                div.setAttribute("class", "item_prize");
+                                var rg_dollar = rs_JSON["shopee"][i]["price"];
+                                div.innerHTML = rg_dollar.toString() + "元";
+                                total = parseInt(total) + parseInt(rg_dollar);
+                                item.appendChild(div);
+                            }
+                        </script>
+
+                        <div id="level3" style="font-size:40px;">總金額 :</div>
+
+                        <script>
+                            var item = document.createElement("div");
+                            item.setAttribute("class", "item");
+                            item.setAttribute("style", "font-size:35px;");
+                            var item_name = document.createElement("div");
+                            item_name.setAttribute("class", "item_name");
+                            var item_prize = document.createElement("div");
+                            item_prize.setAttribute("class", "item_prize");
+                            item_prize.setAttribute("style", "font-size:40px; color:#FF2D2D;");
+                            item_prize.innerHTML = total.toString() + "元";
+                            item.appendChild(item_name);
+                            item.appendChild(item_prize);
+                            formula3.appendChild(item);
+                        </script>
+                    </div>
+                </div>
+                <input type="submit" id="myButton" onclick="submitStr()" value="前往電商平台下單">
+
+</form>
+</div>
+</div>
+
+<div id="side-menu-frame">
+    <div id="side-menu">
+        <nav>
+            <a href="#">
+                <i class="fas fa-home"></i> 首頁
+            </a>
+            <a href="#">
+                <i class="fas fa-book"></i> 食譜目錄
+            </a>
+            <a href="#">
+                <i class="fas fa-fish"></i> 食材目錄
+            </a>
+            <a href="#">
+                <i class="fas fa-heart"></i> 我的最愛
+            </a>
+            <a href="#">
+                <i class="fas fa-share-square"></i> 分享食譜
+            </a>
+            <a href="#">
+                <i class="fas fa-shopping-cart"></i> 購物車
+            </a>
+        </nav>
+    </div>
+    <div id="side-paste">
+
+    </div>
+</div>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+<script>
+    //變數區
+    let word1 = document.getElementById('unite1_font');
+    let word2 = document.getElementById('unite2_font');
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+        authDomain: "test-4fa88.firebaseapp.com",
+        databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "test-4fa88",
+        storageBucket: "test-4fa88.appspot.com",
+        messagingSenderId: "951903532283",
+        appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+        measurementId: "G-NSP6DRS2MS"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    function storedata() {
+        db.collection("訂單").doc("蝦仁訂單").set({
+            品名: "美式賣場熱銷帶尾特大無毒割背蝦仁800克",
+            訂購網站: "熊媽媽買菜網",
+            價格: "990元"
+        })
+    }
+
+    //選單彈出
+    let undo = document.getElementById('undo');
+    let side_menu = document.getElementById('side-menu');
+    let side_paste = document.getElementById('side-paste');
+    let click_count = 0;
+    undo.addEventListener('click', function() {
+        if (click_count % 2 == 0) {
+            side_menu.style.cssText = 'display:flex';
+            side_paste.style.cssText = 'display:flex';
+        }
+
+        if (click_count % 2 == 1) {
+            side_menu.style.cssText = 'display:none';
+            side_paste.style.cssText = 'display:none';
+        }
+
+        click_count = click_count + 1;
+    });
+
+    //勾選方案之間的協同配合
+    let box1 = document.getElementById('box1');
+    let box2 = document.getElementById('box2');
+    let box3 = document.getElementById('box3');
+
+    function box1F() {
+        if ($("#box1").prop("checked") == true) {
+            $("#box2").prop('checked', false);
+            $("#box3").prop('checked', false);
+        }
+    }
+
+    function box2F() {
+        if ($("#box2").prop("checked") == true) {
+            $("#box1").prop('checked', false);
+            $("#box3").prop('checked', false);
+        }
+    }
+
+    function box3F() {
+        if ($("#box3").prop("checked") == true) {
+            $("#box1").prop('checked', false);
+            $("#box2").prop('checked', false);
+        }
+    }
+
+    //提交
+    db.collection("訂單").doc("蝦仁訂單").set({
+        品名: "美式賣場熱銷帶尾特大無毒割背蝦仁800克",
+        訂購網站: "熊媽媽買菜網",
+        價格: "990元"
+    })
+
+    function submitStr() {
+
+        var RDNum = document.getElementById("result_index").value;
+        console.log(RDNum);
+        if ($("#box1").prop("checked") == true) {
+
+            //var RDNum = Math.round(Math.random() * 100000000000000);
+            var submitStr = "{"
+            for (i = 0; i < rs_element_1; i++) {
+                var link1 = rs_JSON["happyshopping"][i]["link"].toString();
+                link1 = link1.replace("&amp;", "&")
+                if (i != rs_element_1 - 1) {
+                    submitStr = submitStr + "\"" + i.toString() + "\": \"" + link1 + "\", "
+                } else {
+                    submitStr = submitStr + "\"" + i.toString() + "\": \"" + link1 + "\"}"
+                }
+            };
+            console.log(submitStr);
+            submitStr = submitStr
+            db.collection("order").doc(RDNum.toString()).set(JSON.parse(submitStr));
+            alert("您已下單成功 請前往firebase確認(測試用提醒)");
+        }
+
+        if ($("#box2").prop("checked") == true) {
+            //var RDNum = Math.round(Math.random() * 100000000000000);
+            var submitStr = "{"
+            for (i = 0; i < rs_element_1; i++) {
+                var link2 = rs_JSON["pchome"][i]["link"].toString();
+                link2 = link2.replace("&amp;", "&")
+                if (i != rs_element_1 - 1) {
+                    submitStr = submitStr + "\"" + i.toString() + "\": \"" + link2 + "\", "
+                } else {
+                    submitStr = submitStr + "\"" + i.toString() + "\": \"" + link2 + "\"}"
+                }
+            };
+            console.log(submitStr);
+            db.collection("order").doc(RDNum.toString()).set(JSON.parse(submitStr));
+            alert("您已下單成功 請前往firebase確認(測試用提醒)");
+        }
+
+        if ($("#box3").prop("checked") == true) {
+            //var RDNum = Math.round(Math.random() * 100000000000000);
+            var submitStr = "{"
+            for (i = 0; i < rs_element_1; i++) {
+                var link3 = rs_JSON["shopee"][i]["link"].toString();
+                link3 = link3.replace("&amp;", "&")
+                if (i != rs_element_1 - 1) {
+                    submitStr = submitStr + "\"" + i.toString() + "\": \"" + link3 + "\", "
+                } else {
+                    submitStr = submitStr + "\"" + i.toString() + "\": \"" + link3 + "\"}"
+                }
+            };
+            console.log(submitStr);
+            console.log(RDNum.toString);
+            db.collection("order").doc(RDNum.toString()).set(JSON.parse(submitStr));
+            alert("您已下單成功 請前往firebase確認(測試用提醒)");
+        }
+
+        if ($("#box1").prop("checked") == false && $("#box2").prop("checked") == false　 && $("#box3").prop("checked") == false) {
+            alert("您尚未選擇任何方案");
+        }
+    }
+
+    //更換食材
+    for (i = 0; i < rs_element_1; i++) {
+        (function(x) {
+            document.getElementById('itemF1_C' + x.toString()).addEventListener('click', function() {
+                document.cookie = "change_name=" + rs_JSON["happyshopping"][x]["name"];
+                document.cookie = "change_price=" + rs_JSON["happyshopping"][x]["price"];
+                document.cookie = "change_prod=" + rs_JSON["happyshopping"][x]["prod"];
+                document.cookie = "change_category=" + rs_JSON["happyshopping"][x]["category"];
+                document.cookie = "change_link=" + rs_JSON["pchome"][x]["link"];
+                document.cookie = "change_number=" + x.toString();
+                document.cookie = "change_from=happyshopping";
+                //編號制定
+                if (Cookies.get("CHANGE_number") == undefined) {
+                    var current_num = 1;
+                    document.cookie = "CHANGE_number=" + current_num.toString();
+                } else {
+                    var current_num = parseInt(Cookies.get("CHANGE_number")) + 1;
+                    document.cookie = "CHANGE_number=" + current_num.toString();
+                }
+                document.location.href = "http://127.0.0.1:5000//choose_page_no2";
+            });
+        })(i)
+    }
+
+    for (i = 0; i < rs_element_2; i++) {
+        (function(x) {
+            document.getElementById('itemF2_C' + x.toString()).addEventListener('click', function() {
+                document.cookie = "change_name=" + rs_JSON["pchome"][x]["name"];
+                document.cookie = "change_price=" + rs_JSON["pchome"][x]["price"];
+                document.cookie = "change_prod=" + rs_JSON["pchome"][x]["prod"];
+                document.cookie = "change_category=" + rs_JSON["pchome"][x]["category"];
+                document.cookie = "change_link=" + rs_JSON["pchome"][x]["link"];
+                document.cookie = "change_number=" + x.toString();
+                document.cookie = "change_from=pchome";
+                //編號制定
+                if (Cookies.get("CHANGE_number") == undefined) {
+                    var current_num = 1;
+                    document.cookie = "CHANGE_number=" + current_num.toString();
+                } else {
+                    var current_num = parseInt(Cookies.get("CHANGE_number")) + 1;
+                    document.cookie = "CHANGE_number=" + current_num.toString();
+                }
+                document.location.href = "http://127.0.0.1:5000//choose_page_no2";
+            });
+        })(i)
+    }
+
+    for (i = 0; i < rs_element_3; i++) {
+        (function(x) {
+            document.getElementById('itemF3_C' + x.toString()).addEventListener('click', function() {
+                document.cookie = "change_name=" + rs_JSON["shopee"][x]["name"];
+                document.cookie = "change_price=" + rs_JSON["shopee"][x]["price"];
+                document.cookie = "change_prod=" + rs_JSON["shopee"][x]["prod"];
+                document.cookie = "change_category=" + rs_JSON["shopee"][x]["category"];
+                document.cookie = "change_link=" + rs_JSON["pchome"][x]["link"];
+                document.cookie = "change_number=" + x.toString();
+                document.cookie = "change_from=shopee";
+                //編號制定
+                if (Cookies.get("CHANGE_number") == undefined) {
+                    var current_num = 1;
+                    document.cookie = "CHANGE_number=" + current_num.toString();
+                } else {
+                    var current_num = parseInt(Cookies.get("CHANGE_number")) + 1;
+                    document.cookie = "CHANGE_number=" + current_num.toString();
+                }
+                document.location.href = "http://127.0.0.1:5000//choose_page_no2";
+            });
+        })(i)
+    }
+</script>
+
+</html>

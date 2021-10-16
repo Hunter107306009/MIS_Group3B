@@ -1,0 +1,179 @@
+/*記得註釋*/
+
+/*統一規範*/
+body{
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
+#main-cut{
+	position:absolute;
+}
+
+/*header設定*/
+#header{
+	height:9vh;
+	width:100vw;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	box-shadow:2px 2px 2px 2px #cccccc;
+	opacity:0.9;
+}
+
+#undo{
+	margin-left:40px;
+	margin-right:200px;
+}
+
+#head_font{
+	font-size:65px;
+}
+
+
+/*區塊範例*/
+#Contents{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:center;
+	width:100vw;
+}
+
+/*警示區塊文字*/
+#Exclamation_frame{
+	height:180px;
+	width:95%;
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	border-radius:20px;
+	background-color:#FFE66F;
+	box-shadow:2px 2px 2px 2px #D9B300;
+	margin-top:20px;
+}
+
+#Exclamation_icon{
+	font-size:50px;
+	margin-left:20px;
+	margin-right:20px;
+	color:#977C00;
+}
+
+#Exclamation_font{
+	color:#977C00;
+	font-size:30px;
+	margin-left:10px;
+}
+
+/*主要區塊*/
+#head{
+	width:100vw;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+}
+
+#head_inner{
+	font-size:60px;
+	margin-top:15px;
+	margin-bottom:3px;
+	margin-left:3%;
+}
+
+#picture{
+	margin-top:10px;
+	margin-bottom:10px;
+	margin-left:5px;
+	margin-right:25px;
+}
+
+.level1{
+	width:85%;
+	margin-left:20px;
+	margin-right:1%;
+}
+
+.level2{
+	width:15%;
+	display:flex;
+	flex-direction:row;
+	justify-content:end;
+	align-items:center;
+}
+
+#check_bar_frame{
+	width:100vw;
+	margin-top:30px;
+	margin-bottom:30px;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+}
+
+#check_bar_wrap{
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	font-size:30px;
+}
+
+#box{
+	height:30px;
+	width:30px;
+}
+
+/*微型選單部分*/
+.small_menu_frame{
+	width:95%;
+	border-radius:20px;
+	border-color:#E0E0E0;
+	border-style:solid;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	margin-bottom:20px;
+	margin-top:20px;
+	box-shadow:2px 2px 2px 2px #cccccc;
+}
+
+/*側邊選單*/
+#side-menu-frame{
+	position:absolute;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	height:91vh;
+}
+
+#side-menu{
+	width:30vw;
+	height:100%;
+	background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+	display:none;
+	flex-direction:column;
+	align-items:center;
+	box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+}
+
+#side-menu nav a{
+	display:block;
+	padding:30px;
+	color:#FCFCFC;
+	text-decoration:none;
+	font-size:30px;
+	border-bottom:outset;
+}
+
+#side-paste{
+	width:70vw;
+	height:100%;
+	background-color:#6C6C6C;
+	display:none;
+	opacity:0.4;
+}

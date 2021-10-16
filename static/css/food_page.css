@@ -1,0 +1,249 @@
+/*記得註釋*/
+
+/*統一規範*/
+body{
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
+#main-cut{
+	position:absolute;
+}
+
+/*header設定*/
+#header{
+	height:9vh;
+	width:100vw;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	box-shadow:2px 2px 2px 2px #cccccc;
+	opacity:0.9;
+}
+
+#undo{
+	margin-left:40px;
+	margin-right:200px;
+}
+
+#head_font{
+	font-size:65px;
+}
+
+
+/*圖片部分*/
+#picture_flex{
+	margin-top:20px;
+	height:31.5vh;
+	display:flex;
+	flex-direction:column;
+	justify-content:flex-start;
+	align-items:center;
+}
+
+#picture_frame{
+	width:95%;
+	border-radius:20px;
+	border-color:#E0E0E0;
+	border-style:solid;
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	margin-bottom:20px;
+	box-shadow:2px 2px 2px 2px #cccccc;
+	padding-top:5px;
+	padding-right:5px;
+	padding-left:5px;
+	padding-bottom:5px;
+}
+
+#lazy_slider{
+	width:940px;
+	height:500px;
+	margin-top:5px;
+	margin-right:2px;
+	margin-left:2px;
+	margin-bottom:5px;
+}
+
+/*主要頁面部分排版*/
+#Contents{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:center;
+	width:100vw;
+}
+
+/*微型選單部分*/
+#small_menu_frame{
+	height:6vh;
+	width:95%;
+	border-radius:20px;
+	border-color:#E0E0E0;
+	border-style:solid;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	margin-bottom:20px;
+	box-shadow:2px 2px 2px 2px #cccccc;
+}
+
+#small_menu_unite1{
+	margin-right:10px;
+	margin-left:10px;
+	font-size: 40px;
+	padding-bottom:15px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:10px;
+	margin-bottom:5px;
+	border-bottom-style:outset;
+	border-width:4px;
+	color:#FF9224;
+	border-color:#FF9224;
+}
+
+#small_menu_unite2{
+	margin-right:10px;
+	margin-left:10px;
+	font-size: 40px;
+	padding-bottom:15px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:10px;
+	margin-bottom:5px;
+	border-width:4px;
+	border-bottom-style:none;
+	border-color:#FF9224;
+}
+
+/*主要頁面文字區域*/
+#main_word_frame1{
+	overflow-y:scroll;
+	background-color:#FCFCFC;
+	height:50vh;
+	width:95%;
+	border-radius:20px;
+	border-color:#E0E0E0;
+	border-style:solid;
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:center;
+	margin-bottom:20px;
+	box-shadow:2px 2px 2px 2px #cccccc;
+}
+
+#main_word_frame2{
+	overflow-y:scroll;
+	background-color:#FCFCFC;
+	height:50vh;
+	width:95%;
+	border-radius:20px;
+	border-color:#E0E0E0;
+	border-style:solid;
+	display:none;
+	flex-direction:column;
+	justify-content:start;
+	align-items:center;
+	margin-bottom:20px;
+	box-shadow:2px 2px 2px 2px #cccccc;
+}
+
+#formula{
+	border-bottom-style:outset;
+	border-width:2px;
+	border-color:#F0F0F0;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	width:70%;
+	padding-top:40px;
+	padding-bottom:40px;
+}
+
+#formula_font{
+	font-size:30px;
+	margin-left:10px;
+	width:90%;
+}
+
+#box{
+  	height:50px;
+  	width:50px;
+}
+
+#myButton{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	width:300px;
+	height:70px;
+	box-shadow: 3px 4px 0px 0px #EA7500;
+	background-color:#FF9224;
+	border-radius:5px;
+	border:1px solid #FF9224;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:40px;
+	padding:7px 25px;
+	margin-left:130px;
+	margin-right:130px;
+	margin-top:30px;
+	margin-bottom:30px;
+}
+
+/*側邊選單*/
+#side-menu-frame{
+	position:absolute;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	height:91vh;
+}
+
+#side-menu{
+	width:30vw;
+	height:100%;
+	background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+	display:none;
+	flex-direction:column;
+	align-items:center;
+	box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+}
+
+#side-menu nav a{
+	display:block;
+	padding:30px;
+	color:#FCFCFC;
+	text-decoration:none;
+	font-size:30px;
+	border-bottom:outset;
+	
+}
+
+#side-paste{
+	width:70vw;
+	height:100%;
+	background-color:#6C6C6C;
+	display:none;
+	opacity:0.4;
+}
+
+/*
+#side-menu nav a i{
+	margin-right:-1.3em;
+	transform:scale(0);
+	transition:.3s;
+}
+
+#side-menu nav a:onclick i{
+	margin-right:0em;
+	transform:scale(1);
+}
+*/

@@ -1,0 +1,2089 @@
+<!--記得註釋--> 
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>分享食譜</title>
+	<script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+	<style>
+		/*統一規範*/
+		body{
+			font-family: 'Noto Sans TC', sans-serif;
+		}
+
+		#main-cut{
+			position:absolute;
+		}
+
+		/*header設定*/
+		#header{
+			height:9vh;
+			width:100vw;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			box-shadow:2px 2px 2px 2px #cccccc;
+			opacity:0.9;
+		}
+
+		#undo{
+			margin-left:40px;
+			margin-right:250px;
+			color:#FCFCFC;
+			font-size:50px;
+		}
+
+		#head_font{
+			font-size:65px;
+			color:#FCFCFC;
+		}
+
+
+		/*區塊範例*/
+		#Contents{
+			display:flex;
+			flex-direction:column;
+			justify-content:center;
+			align-items:center;
+			width:100vw;
+			height:91vh;
+			margin-top: 0px;
+			overflow: auto;
+			scrollbar-width: none;
+		}
+
+		#Contents::-webkit-scrollbar{
+			display: none;
+		}
+
+		#unite_font{
+			/*margin-left:20px;*/
+			font-size:80px;
+			position: relative;
+			text-align: center;
+			margin-top: -80px;
+		}
+
+		a{
+			text-decoration: none;
+			padding: 10px;
+		}
+
+		/*微型選單部分*/
+		#small_menu_frame{
+			height:25vh;
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			margin-bottom:20px;
+			margin-top:20px;
+			box-shadow:2px 2px 2px 2px #cccccc;
+			white-space: nowrap;
+			overflow: auto;
+		}
+
+		/*側邊選單*/
+		#side-menu-frame{
+			position:absolute;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			height:91vh;
+		}
+
+		#side-menu{
+			width:30vw;
+			height:100%;
+			background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+			display:none;
+			flex-direction:column;
+			align-items:center;
+			box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+		}
+
+		#side-menu nav a{
+			display:block;
+			padding:30px;
+			color:#FCFCFC;
+			text-decoration:none;
+			font-size:30px;
+			border-bottom:outset;
+			
+		}
+
+		#side-paste{
+			width:70vw;
+			height:100%;
+			background-color:#6C6C6C;
+			display:none;
+			opacity:0.4;
+		}
+
+		.share{
+			width: 65vw;
+			height: 80vh;
+			/*background-color: rgba(0, 0, 0, .5);*/
+			/*border-radius: 10px;*/
+			/*border: 10px solid #fff;*/
+			/*box-shadow: 0 0 45px #000;*/
+			/*backdrop-filter: blur(5px);*/
+			display: flex;
+			justify-content: center;
+			/*align-items: center;*/
+		}
+		.form{
+			width: 100%;
+			color: #3C3C3C;
+			/*position: absolute;*/
+		}
+		.form label{
+			line-height: 2;
+			font-size: 50px;
+		}
+		.form input{
+			width: 100%;
+			border: 1px solid #aaa;
+			line-height: 2;
+			border-radius: 15px;
+			font-size: 50px;
+			border: 0;
+			padding-left: 15px;
+		}
+		.form .btn-group{
+			font-size: 0;
+			margin-top: 50px;
+		}
+		.form .btn{
+			font-size: 45px;
+			border-radius: 20px;
+			border: none;
+			background-color: #FF9224;
+			width: 32vw;
+			height: 6vh;
+			padding: 10px 0;
+			color: #fff;
+		}
+
+		.form .btn + .btn{
+			margin-left: 1vw;
+		}
+
+		.form .fas{
+			font-size: 50px;
+			border-radius: 50%;
+			color: #FF9224;
+			position: relative;
+			top: 0px;
+		}
+
+		.select {
+			width: 90%;
+			height: 70px;
+			border-radius: 10px;
+			background: #FCFCFC;
+			color: #3C3C3C;
+			border: 0;
+			padding-left: 15px;
+			font-family: 'PingFangTC', '微軟正黑體', sans-serif;
+			font-weight:bold;
+			font-size: 40px;
+		}
+
+		.custom-select{
+			position: relative;
+			border-radius: 10px;
+		}
+
+		.custom-arrow{
+			position: absolute;
+			top: 0;
+			right: 0%;
+			display: block;
+			background-color: #ccc;
+			height: 100%;
+			width: 5rem;
+			pointer-events: none;
+			border-top-right-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
+
+		.custom-arrow::before,
+		.custom-arrow::after{
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.custom-arrow::before{
+			border-left: 1em solid transparent;
+			border-right: 1em solid transparent;	
+			border-top: 1em solid #aaa;
+			top: 50%;
+		}
+
+		.item{
+			height: 380px;
+			display: flex;
+			flex-direction: row;
+			overflow-x: auto;
+			overflow-y: hidden;
+			scrollbar-width: none;
+		}
+		.item::-webkit-scrollbar{
+			display: none;
+		}
+		.pic{
+			position: relative;
+			top: 30px;
+			padding: auto;
+		}
+		.delete{
+			font-size: 50px;
+			bottom: 390px;
+			left: 330px;
+			color: #FF9224;
+			position: relative;
+		}
+		.item .pic img{
+			width: 350px;
+			height: 350px;
+			object-fit: cover;
+			border-radius: 30px;
+		}
+		.item .pic + .pic{
+			padding-left: 30px;
+		}
+		#flexx{
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+		}
+
+		.custom-arrow-new{
+			position: absolute;
+			top: 0;
+			right: -1%;
+			display: block;
+			background-color: #ccc;
+			height: 100%;
+			width: 5rem;
+			border-top-right-radius: 10px;
+			border-bottom-right-radius: 10px;
+			height: 73px; 
+		}
+		.custom-arrow-new::before,
+		.custom-arrow-new::after{
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		.custom-arrow-new::before{
+			border-left: 1em solid transparent;
+			border-right: 1em solid transparent;	
+			border-top: 1em solid #aaa;
+			top: 50%;
+		}
+		.other-block-css{
+			display:none;
+			height: 500px;
+			width: 700px;
+			background-color: #FCFCFC;
+			border-radius: 10px;
+			margin-top:-8px;
+			flex-direction:column;
+			justify-content:start;
+			align-items:center;
+			overflow-y:auto;
+		}
+		#other-block-inner-head{
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			width:100%;
+			font-family: 'PingFangTC', '微軟正黑體', sans-serif;
+			font-weight:bold; 
+			font-size:30px;
+			margin-left:10px;
+			margin-bottom:5px;
+			margin-top:5px;
+		}
+		#other-block-inner{
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			width:100%;
+			font-family: 'PingFangTC', '微軟正黑體', sans-serif;
+			font-weight:bold; 
+			font-size:30px;
+			margin-left:10px;
+			margin-bottom:5px;
+			margin-top:5px;
+		}
+		.grey-block{
+			display:flex;
+			align-items:center;
+			border-radius:5px;
+			height:40px;
+			padding-left:4px;
+			padding-right:4px;
+			background-color:#6C6C6C;
+			margin:5px;
+			font-family: 'PingFangTC', '微軟正黑體', sans-serif;
+			font-weight:bold; 
+			font-size:30px;
+			color:#FCFCFC;
+		}
+		#op{
+			font-family: 'PingFangTC', '微軟正黑體', sans-serif; 
+			font-weight:bold; 
+			font-size:20px;
+		}
+
+		#display{
+			display:flex;
+			flex-direction:row;
+			justify-content:center;
+			align-items:center;
+			height:95%;
+			width:90%;
+			background-color:hsla(0,100%,100%,0.3);
+			border-radius:30px;
+		}
+
+		.add-button{
+			border-style:solid;
+			border-radius:20px;
+			margin-top:15px;
+			border-color:#FF8040;
+		}		
+	</style>
+	<!--藝術字體--> 
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+	<!--思源黑體--> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+</head>
+
+<body style="background-color:#E0E0E0">
+	<div id="header" style="background-color:#FF5809">
+		<i class="fas fa-bars" id="undo"></i>
+		<div id="head_font">分享食譜</div>
+	</div>
+
+	<div id="main-cut">
+		<div id="Contents"  style="background-image: url('https://firebasestorage.googleapis.com/v0/b/test-4fa88.appspot.com/o/3.png?alt=media&token=36ff987c-d371-41e7-b5c3-9a82076c873b'); background-size:100vw 100vh;" >
+			<div id="display">
+			<div class="share">
+				<form class="form">
+
+					<div class="group">
+						<label>菜餚分類</label>
+					</div>
+
+					<div class="custom-select">
+						<select class="select" id="SSS" style="background-color:#FCFCFC">
+	    					<option style="display:none;" >請選擇菜餚種類</option>
+	    					<option id="op">湯品</option>
+	    					<option id="op">甜點/點心</option>
+	    					<option id="op">早餐/輕食</option>
+	    					<option id="op">中式料理</option>
+	    					<option id="op">日式料理</option>
+	    					<option id="op">西式料理</option>
+	    					<option id="op">韓式料理</option>
+	    					<option id="op">東南亞料理</option>
+						</select>
+						<span class="custom-arrow"></span>
+					</div>
+
+					<input type="text" id="dish_nameA" placeholder="請輸入菜餚名稱" style="margin-top:20px; font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 97%; height: 70px; background-color:#FCFCFC">
+					<div class="group" style="margin-top:20px;" id="part1">
+						<label for="ingredient_name">添加食材</label>
+						<!--新增標記(頭)--> 
+						<div id="flexx">
+							<div class="custom-select">
+								<input type="text" id="dish_name_fooP0" disabled="true" placeholder="選擇食材名稱" style="font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 330px; height: 70px; margin-bottom:10px;  background-color:#FCFCFC">
+								<span class="custom-arrow-new" id="arrow"></span>
+							</div>
+							<input type="text" id="dish_name0" placeholder="食材份量" style="font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 48%; height: 70px; margin-bottom:10px; margin-left:2%;  background-color:#FCFCFC">
+						</div>
+						<div id="other-block" class="other-block-css">
+							<div id="other-block-inner-head" style="font-size:40px;">蔬菜</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_1_0">杏鮑菇</div>
+								<div class="grey-block" id="BK_2_0">金針菇</div>
+								<div class="grey-block" id="BK_3_0">香菇</div>
+								<div class="grey-block" id="BK_4_0">地瓜葉</div>
+								<div class="grey-block" id="BK_5_0">小白菜</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_6_0">高麗菜</div>
+								<div class="grey-block" id="BK_7_0">青江菜</div>
+								<div class="grey-block" id="BK_8_0">菠菜</div>
+								<div class="grey-block" id="BK_9_0">油菜</div>
+								<div class="grey-block" id="BK_10_0">娃娃菜</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_11_0">大陸妹</div>
+								<div class="grey-block" id="BK_12_0">花椰菜</div>
+								<div class="grey-block" id="BK_13_0">莧菜</div>
+								<div class="grey-block" id="BK_14_0">牛蒡</div>
+								<div class="grey-block" id="BK_15_0">洋蔥</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_16_0">紅蘿蔔</div>
+								<div class="grey-block" id="BK_17_0">馬鈴薯</div>
+								<div class="grey-block" id="BK_18_0">玉米筍</div>
+								<div class="grey-block" id="BK_19_0">白蘿蔔</div>
+								<div class="grey-block" id="BK_20_0">番茄</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_21_0">秀珍菇</div>
+								<div class="grey-block" id="BK_22_0">木耳</div>
+								<div class="grey-block" id="BK_23_0">小黃瓜</div>
+								<div class="grey-block" id="BK_24_0">大黃瓜</div>
+								<div class="grey-block" id="BK_25_0">節瓜</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_26_0">辣椒</div>
+								<div class="grey-block" id="BK_27_0">青椒</div>
+								<div class="grey-block" id="BK_28_0">甜椒</div>
+								<div class="grey-block" id="BK_29_0">玉米</div>
+								<div class="grey-block" id="BK_30_0">南瓜</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_31_0">芹菜</div>
+								<div class="grey-block" id="BK_32_0">泡菜</div>
+								<div class="grey-block" id="BK_33_0">海帶</div>
+							</div>
+							<div id="other-block-inner-head" style="font-size:40px;">水果</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_34_0">鳳梨</div>
+								<div class="grey-block" id="BK_35_0">蘋果</div>
+								<div class="grey-block" id="BK_36_0">香蕉</div>
+								<div class="grey-block" id="BK_37_0">檸檬</div>
+							</div>
+							<div id="other-block-inner-head" style="font-size:40px;">調味料</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_38_0">九層塔</div>
+								<div class="grey-block" id="BK_39_0">薑</div>
+								<div class="grey-block" id="BK_40_0">黑胡椒</div>
+								<div class="grey-block" id="BK_41_0">醬油</div>
+								<div class="grey-block" id="BK_42_0">白糖</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_43_0">紅糖</div>
+								<div class="grey-block" id="BK_44_0">醋</div>
+								<div class="grey-block" id="BK_45_0">糯米醋</div>
+								<div class="grey-block" id="BK_46_0">橄欖油</div>
+								<div class="grey-block" id="BK_47_0">味噌</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_48_0">番茄醬</div>
+								<div class="grey-block" id="BK_49_0">蔥</div>
+								<div class="grey-block" id="BK_50_0">蔥花</div>
+								<div class="grey-block" id="BK_51_0">香油</div>
+								<div class="grey-block" id="BK_52_0">沙拉油</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_53_0">麻油</div>
+								<div class="grey-block" id="BK_54_0">冰糖</div>
+								<div class="grey-block" id="BK_55_0">豆瓣醬</div>
+								<div class="grey-block" id="BK_56_0">奶油</div>
+								<div class="grey-block" id="BK_57_0">白醋</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_58_0">鹽</div>
+								<div class="grey-block" id="BK_59_0">五香粉</div>
+								<div class="grey-block" id="BK_60_0">美乃滋</div>
+								<div class="grey-block" id="BK_61_0">烏醋</div>
+								<div class="grey-block" id="BK_62_0">味淋</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_63_0">香油</div>
+								<div class="grey-block" id="BK_64_0">白胡椒粉</div>
+								<div class="grey-block" id="BK_65_0">沙拉醬</div>
+								<div class="grey-block" id="BK_66_0">凱薩醬</div>
+								<div class="grey-block" id="BK_67_0">紅椒粉</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_68_0">芥末醬</div>
+								<div class="grey-block" id="BK_69_0">魚露</div>
+								<div class="grey-block" id="BK_70_0">香茅</div>
+								<div class="grey-block" id="BK_71_0">花椒</div>
+								<div class="grey-block" id="BK_72_0">蜂蜜</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_73_0">黑麻油</div>
+							</div>
+							<div id="other-block-inner-head" style="font-size:40px;">肉類</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_74_0">牛肉</div>
+								<div class="grey-block" id="BK_75_0">豬肉</div>
+								<div class="grey-block" id="BK_76_0">羊肉</div>
+								<div class="grey-block" id="BK_77_0">雞肉</div>
+								<div class="grey-block" id="BK_78_0">肉片</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_79_0">半雞</div>
+								<div class="grey-block" id="BK_80_0">全雞</div>
+								<div class="grey-block" id="BK_81_0">豬絞肉</div>
+								<div class="grey-block" id="BK_82_0">肉絲</div>
+								<div class="grey-block" id="BK_83_0">雞腿</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_84_0">雞胸</div>
+								<div class="grey-block" id="BK_85_0">雞翅</div>
+								<div class="grey-block" id="BK_86_0">牛肉塊</div>
+								<div class="grey-block" id="BK_87_0">豬肉塊</div>
+								<div class="grey-block" id="BK_88_0">雞肉塊</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_89_0">肉醬</div>
+								<div class="grey-block" id="BK_90_0">牛絞肉</div>
+								<div class="grey-block" id="BK_91_0">培根</div>
+								<div class="grey-block" id="BK_92_0">五花肉片</div>
+								<div class="grey-block" id="BK_93_0">牛五花肉</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_94_0">豬五花肉</div>
+							</div>
+							<div id="other-block-inner-head" style="font-size:40px;">海鮮</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_95_0">蝦仁</div>
+								<div class="grey-block" id="BK_96_0">蝦子</div>
+								<div class="grey-block" id="BK_97_0">小卷</div>
+								<div class="grey-block" id="BK_98_0">章魚</div>
+								<div class="grey-block" id="BK_99_0">透抽</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_100_0">草蝦</div>
+								<div class="grey-block" id="BK_101_0">白蝦</div>
+								<div class="grey-block" id="BK_102_0">吳郭魚</div>
+								<div class="grey-block" id="BK_103_0">白鯧魚</div>
+								<div class="grey-block" id="BK_104_0">秋刀魚</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_105_0">鮪魚</div>
+								<div class="grey-block" id="BK_106_0">鮭魚</div>
+								<div class="grey-block" id="BK_107_0">柳葉魚</div>
+								<div class="grey-block" id="BK_108_0">旗魚</div>
+								<div class="grey-block" id="BK_109_0">虱目魚</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_110_0">沙丁魚</div>
+								<div class="grey-block" id="BK_111_0">黃魚</div>
+								<div class="grey-block" id="BK_112_0">鯖魚</div>
+								<div class="grey-block" id="BK_113_0">吻仔魚</div>
+								<div class="grey-block" id="BK_114_0">螃蟹</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_115_0">蟹肉</div>
+								<div class="grey-block" id="BK_116_0">干貝</div>
+								<div class="grey-block" id="BK_117_0">花枝</div>
+								<div class="grey-block" id="BK_118_0">小管</div>
+								<div class="grey-block" id="BK_119_0">魚卵</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_120_0">帆立貝</div>
+								<div class="grey-block" id="BK_121_0">螺肉</div>
+								<div class="grey-block" id="BK_122_0">蛤</div>
+								<div class="grey-block" id="BK_123_0">蜆</div>
+								<div class="grey-block" id="BK_124_0">海瓜子</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_125_0">比喻魚</div>
+								<div class="grey-block" id="BK_126_0">海膽</div>
+								<div class="grey-block" id="BK_127_0">魷魚</div>
+							</div>
+							<div id="other-block-inner-head" style="font-size:40px;">主食</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_128_0">米</div>
+								<div class="grey-block" id="BK_129_0">烏龍麵</div>
+								<div class="grey-block" id="BK_130_0">米粉</div>
+								<div class="grey-block" id="BK_131_0">冬粉</div>
+								<div class="grey-block" id="BK_132_0">義大利麵</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_133_0">筆管麵</div>
+								<div class="grey-block" id="BK_134_0">吐司</div>
+								<div class="grey-block" id="BK_135_0">麵包</div>
+								<div class="grey-block" id="BK_136_0">漢堡麵包</div>
+							</div>
+							<div id="other-block-inner-head" style="font-size:40px;">其他</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_137_0">樹薯粉</div>
+								<div class="grey-block" id="BK_138_0">地瓜粉</div>
+								<div class="grey-block" id="BK_139_0">太白粉</div>
+								<div class="grey-block" id="BK_140_0">豆腐</div>
+								<div class="grey-block" id="BK_141_0">雞蛋</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_142_0">肉鬆</div>
+								<div class="grey-block" id="BK_143_0">起司</div>
+								<div class="grey-block" id="BK_144_0">糯米粉</div>
+								<div class="grey-block" id="BK_145_0">玉米粉</div>
+								<div class="grey-block" id="BK_146_0">抹茶粉</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_147_0">可可粉</div>
+								<div class="grey-block" id="BK_148_0">杏仁片</div>
+								<div class="grey-block" id="BK_149_0">牛奶</div>
+								<div class="grey-block" id="BK_150_0">泡打粉</div>
+								<div class="grey-block" id="BK_151_0">巧克力</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_152_0">杏仁</div>
+								<div class="grey-block" id="BK_153_0">杏仁粉</div>
+								<div class="grey-block" id="BK_154_0">月桂葉</div>
+								<div class="grey-block" id="BK_155_0">咖哩</div>
+								<div class="grey-block" id="BK_156_0">綠咖哩</div>
+							</div>
+							<div id="other-block-inner">
+								<div class="grey-block" id="BK_157_0">中筋麵粉</div>
+								<div class="grey-block" id="BK_158_0">低筋麵粉</div>
+								<div class="grey-block" id="BK_159_0">蒜頭</div>
+								<div class="grey-block" id="BK_160_0">麵粉</div>
+							</div>
+							<div id="other-block-inner">
+							</div>
+						</div>
+					</div>
+					<!--新增標記(尾)-->
+
+					<div class="add-button" style="width:180px;">
+						<label for="ingredient_name" style="font-size:30px; margin-left:2%;  margin-right:1%; color:#5B5B5B; margin-bottom:30px; ">新增食材</label>
+						<i class="fas fa-plus-circle" id="add1" style="font-size:30px;"></i>
+					</div>
+
+					<div class="add-button"  style="width:230px;">
+						<label for="ingredient_name" style="font-size:30px; margin-left:2%;  margin-right:1%; color:#5B5B5B; margin-bottom:30px; ">新增額外食材</label>
+						<i class="fas fa-plus-circle" id="add4" style="font-size:30px;"></i>
+					</div>
+
+
+					<div class="group" id="part2">
+						<label for="ingredient_name">添加步驟</label>
+						<input type="text" id="part2_0" placeholder="輸入烹飪步驟" style="font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 97%; height: 70px; margin-bottom:10px; background-color:#FCFCFC">
+					</div>
+
+					<div class="add-button"  style="width:180px;">
+						<label for="ingredient_name" style="margin-bottom:30px; font-size:30px; margin-left:2%;  margin-right:1%; color:#5B5B5B;">新增步驟</label>
+						<i class="fas fa-plus-circle" id="add2" style="font-size:30px;"></i>
+					</div>
+
+					<div class="group">
+						<label for="ingredient_name">上傳照片</label>
+						<div id="picture_part">
+							<input type="file" id="add3_0" value="upload">
+						</div>
+						<div class="add-button"  style="width:180px;">
+							<label for="ingredient_name" style="margin-bottom:30px; font-size:30px; margin-left:2%;  margin-right:1%; color:#5B5B5B;">新增照片</label>
+							<i class="fas fa-plus-circle" id="add3" style="font-size:30px;"></i>
+						</div>	
+						
+					</div>				
+					<div class="btn-group">
+						<button type="button" class="btn" id="choose1" style="font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold;">分享</button>
+						<button type="button" class="btn" id="choose2" style="font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold;">重設</button>
+					</div>
+				</form>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<div id="side-menu-frame">
+		<div id="side-menu">
+			<nav>
+				<a href="#">
+					<i class="fas fa-home"></i>
+					首頁
+				</a>
+				<a href="#">
+					<i class="fas fa-book"></i>
+					食譜目錄
+				</a>
+				<a href="#">
+					<i class="fas fa-fish"></i>
+					食材目錄
+				</a>
+				<a href="#">
+					<i class="fas fa-heart"></i>
+					我的最愛
+				</a>
+				<a href="#">
+					<i class="fas fa-share-square"></i>
+					分享食譜
+				</a>
+				<a href="#">
+					<i class="fas fa-shopping-cart"></i>
+					購物車
+				</a>
+			</nav>
+		</div>
+		<div id="side-paste">
+
+		</div>
+	</div>	
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+<script>
+    //選單彈出
+    let undo = document.getElementById('undo');
+    let side_menu = document.getElementById('side-menu');
+    let side_paste = document.getElementById('side-paste');
+    let click_count = 0;
+    undo.addEventListener('click', function() {
+        if (click_count % 2 == 0) {
+            side_menu.style.cssText = 'display:flex';
+            side_paste.style.cssText = 'display:flex';
+        }
+
+        if (click_count % 2 == 1) {
+            side_menu.style.cssText = 'display:none';
+            side_paste.style.cssText = 'display:none';
+        }
+
+        click_count = click_count + 1;
+    });
+
+    //食材選單彈出
+    
+    let custom = document.getElementById('arrow');
+    let other = document.getElementById('other-block');
+    let click_count1 = 0;
+    custom.addEventListener('click', function() {
+    	if (click_count1 % 2 == 0) {
+    	other.style.cssText  = 'display:flex;';
+        }
+
+        if (click_count1 % 2 == 1) {
+    	other.style.cssText  = 'display:none;';
+        }
+    	click_count1 = click_count1 + 1;
+    });
+
+    
+    //新增欄位
+    let add1 = document.getElementById('add1');
+    let add2 = document.getElementById('add2');
+    let add3 = document.getElementById('add3');
+    let part1 = document.getElementById('part1');
+    let part2 = document.getElementById('part2');
+    let part1_count = 0;
+    let part2_count = 0;
+    let part3_count = 0;
+    let part4_count = 0;
+    add1.addEventListener('click', function() {
+	    part1_count=part1_count+1;
+    	var div = document.createElement("div");
+    	div.setAttribute("id", "flexx");
+    	var div1 = document.createElement("div");
+    	div1.setAttribute("class", "custom-select");
+    	var input = document.createElement("input");
+    	input.setAttribute("type", "text");
+    	input.setAttribute("id", "dish_name_fooP"+part1_count.toString());
+    	input.setAttribute("placeholder", "選擇食材名稱");
+    	input.setAttribute("disabled", "true");
+    	input.setAttribute("style", "font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 330px; height: 70px; margin-bottom:10px;");
+    	var span = document.createElement("span");
+    	span.setAttribute("class", "custom-arrow-new");
+    	span.setAttribute("id", "arrow"+part1_count.toString());
+    	var input1 = document.createElement("input");
+    	input1.setAttribute("type", "text");
+    	input1.setAttribute("id", "dish_name"+part1_count.toString());
+    	input1.setAttribute("placeholder", "食材份量");
+    	input1.setAttribute("style", "font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 48%; height: 70px; margin-bottom:10px; margin-left:2%;");
+    	var i = document.createElement("i");
+    	//i.setAttribute("class", "fas fa-minus-circle");
+    	//i.setAttribute("style", "size:13px; color:#ADADAD; margin-left:10px; margin-bottom:10px;");
+    	div1.appendChild(input);
+    	div1.appendChild(span);
+    	div.appendChild(div1);
+    	div.appendChild(input1);
+    	//div.appendChild(i);
+    	part1.appendChild(div);
+    	var div3 = document.createElement("div");
+    	div3.setAttribute("id", "other-block"+part1_count.toString());
+    	div3.setAttribute("class", "other-block-css");
+    	
+
+    	var div_1M = document.createElement("div");
+    	div_1M.setAttribute("id", "other-block-inner-head");
+    	div_1M.setAttribute("style", "font-size:40px;");
+    	div_1M.innerHTML="蔬菜";
+    	var div_2M = document.createElement("div");
+    	div_2M.setAttribute("id", "other-block-inner-head");
+    	div_2M.setAttribute("style", "font-size:40px;");
+    	div_2M.innerHTML="水果";
+    	var div_3M = document.createElement("div");
+    	div_3M.setAttribute("id", "other-block-inner-head");
+    	div_3M.setAttribute("style", "font-size:40px;");
+    	div_3M.innerHTML="調味料";
+    	var div_4M = document.createElement("div");
+    	div_4M.setAttribute("id", "other-block-inner-head");
+    	div_4M.setAttribute("style", "font-size:40px;");
+    	div_4M.innerHTML="肉類";
+    	var div_5M = document.createElement("div");
+    	div_5M.setAttribute("id", "other-block-inner-head");
+    	div_5M.setAttribute("style", "font-size:40px;");
+    	div_5M.innerHTML="海鮮";
+    	var div_6M = document.createElement("div");
+    	div_6M.setAttribute("id", "other-block-inner-head");
+    	div_6M.setAttribute("style", "font-size:40px;");
+    	div_6M.innerHTML="主食";
+    	var div_7M = document.createElement("div");
+    	div_7M.setAttribute("id", "other-block-inner-head");
+    	div_7M.setAttribute("style", "font-size:40px;");
+    	div_7M.innerHTML="其他";
+
+    	div3.appendChild(div_1M);
+
+    	var div_1M_1 = document.createElement("div");
+    	div_1M_1.setAttribute("id", "other-block-inner");
+    	var div_1M_1_1 = document.createElement("div");
+    	div_1M_1_1.setAttribute("class", "grey-block");
+    	div_1M_1_1.setAttribute("id", "BK_1_"+part1_count.toString());
+    	div_1M_1_1.innerHTML="杏鮑菇";
+    	var div_1M_1_2 = document.createElement("div");
+    	div_1M_1_2.setAttribute("class", "grey-block");
+    	div_1M_1_2.setAttribute("id", "BK_2_"+part1_count.toString());
+    	div_1M_1_2.innerHTML="金針菇";
+    	var div_1M_1_3 = document.createElement("div");
+    	div_1M_1_3.setAttribute("class", "grey-block");
+    	div_1M_1_3.setAttribute("id", "BK_3_"+part1_count.toString());
+    	div_1M_1_3.innerHTML="香菇";
+    	var div_1M_1_4 = document.createElement("div");
+    	div_1M_1_4.setAttribute("class", "grey-block");
+    	div_1M_1_4.setAttribute("id", "BK_4_"+part1_count.toString());
+    	div_1M_1_4.innerHTML="地瓜葉";
+    	var div_1M_1_5 = document.createElement("div");
+    	div_1M_1_5.setAttribute("class", "grey-block");
+    	div_1M_1_5.setAttribute("id", "BK_5_"+part1_count.toString());
+    	div_1M_1_5.innerHTML="小白菜";
+    	div_1M_1.appendChild(div_1M_1_1);
+    	div_1M_1.appendChild(div_1M_1_2);
+    	div_1M_1.appendChild(div_1M_1_3);
+    	div_1M_1.appendChild(div_1M_1_4);
+    	div_1M_1.appendChild(div_1M_1_5);
+    	div3.appendChild(div_1M_1);
+
+		var div_1M_2 = document.createElement("div");
+    	div_1M_2.setAttribute("id", "other-block-inner");
+    	var div_1M_2_1 = document.createElement("div");
+    	div_1M_2_1.setAttribute("class", "grey-block");
+    	div_1M_2_1.setAttribute("id", "BK_6_"+part1_count.toString());
+    	div_1M_2_1.innerHTML="高麗菜";
+    	var div_1M_2_2 = document.createElement("div");
+    	div_1M_2_2.setAttribute("class", "grey-block");
+    	div_1M_2_2.setAttribute("id", "BK_7_"+part1_count.toString());
+    	div_1M_2_2.innerHTML="青江菜";
+    	var div_1M_2_3 = document.createElement("div");
+    	div_1M_2_3.setAttribute("class", "grey-block");
+    	div_1M_2_3.setAttribute("id", "BK_8_"+part1_count.toString());
+    	div_1M_2_3.innerHTML="菠菜";
+    	var div_1M_2_4 = document.createElement("div");
+    	div_1M_2_4.setAttribute("class", "grey-block");
+    	div_1M_2_4.setAttribute("id", "BK_9_"+part1_count.toString());
+    	div_1M_2_4.innerHTML="油菜";
+    	var div_1M_2_5 = document.createElement("div");
+    	div_1M_2_5.setAttribute("class", "grey-block");
+    	div_1M_2_5.setAttribute("id", "BK_10_"+part1_count.toString());
+    	div_1M_2_5.innerHTML="娃娃菜";
+    	div_1M_2.appendChild(div_1M_2_1);
+    	div_1M_2.appendChild(div_1M_2_2);
+    	div_1M_2.appendChild(div_1M_2_3);
+    	div_1M_2.appendChild(div_1M_2_4);
+    	div_1M_2.appendChild(div_1M_2_5);
+    	div3.appendChild(div_1M_2);
+
+    	var div_1M_3 = document.createElement("div");
+    	div_1M_3.setAttribute("id", "other-block-inner");
+    	var div_1M_3_1 = document.createElement("div");
+    	div_1M_3_1.setAttribute("class", "grey-block");
+    	div_1M_3_1.setAttribute("id", "BK_11_"+part1_count.toString());
+    	div_1M_3_1.innerHTML="大陸妹";
+    	var div_1M_3_2 = document.createElement("div");
+    	div_1M_3_2.setAttribute("class", "grey-block");
+    	div_1M_3_2.setAttribute("id", "BK_12_"+part1_count.toString());
+    	div_1M_3_2.innerHTML="花椰菜";
+    	var div_1M_3_3 = document.createElement("div");
+    	div_1M_3_3.setAttribute("class", "grey-block");
+    	div_1M_3_3.setAttribute("id", "BK_13_"+part1_count.toString());
+    	div_1M_3_3.innerHTML="莧菜";
+    	var div_1M_3_4 = document.createElement("div");
+    	div_1M_3_4.setAttribute("class", "grey-block");
+    	div_1M_3_4.setAttribute("id", "BK_14_"+part1_count.toString());
+    	div_1M_3_4.innerHTML="牛蒡";
+    	var div_1M_3_5 = document.createElement("div");
+    	div_1M_3_5.setAttribute("class", "grey-block");
+    	div_1M_3_5.setAttribute("id", "BK_15_"+part1_count.toString());
+    	div_1M_3_5.innerHTML="洋蔥";
+    	div_1M_3.appendChild(div_1M_3_1);
+    	div_1M_3.appendChild(div_1M_3_2);
+    	div_1M_3.appendChild(div_1M_3_3);
+    	div_1M_3.appendChild(div_1M_3_4);
+    	div_1M_3.appendChild(div_1M_3_5);
+    	div3.appendChild(div_1M_3);
+
+    	var div_1M_4 = document.createElement("div");
+    	div_1M_4.setAttribute("id", "other-block-inner");
+    	var div_1M_4_1 = document.createElement("div");
+    	div_1M_4_1.setAttribute("class", "grey-block");
+    	div_1M_4_1.setAttribute("id", "BK_16_"+part1_count.toString());
+    	div_1M_4_1.innerHTML="紅蘿蔔";
+    	var div_1M_4_2 = document.createElement("div");
+    	div_1M_4_2.setAttribute("class", "grey-block");
+    	div_1M_4_2.setAttribute("id", "BK_17_"+part1_count.toString());
+    	div_1M_4_2.innerHTML="馬鈴薯";
+    	var div_1M_4_3 = document.createElement("div");
+    	div_1M_4_3.setAttribute("class", "grey-block");
+    	div_1M_4_3.setAttribute("id", "BK_18_"+part1_count.toString());
+    	div_1M_4_3.innerHTML="玉米筍";
+    	var div_1M_4_4 = document.createElement("div");
+    	div_1M_4_4.setAttribute("class", "grey-block");
+    	div_1M_4_4.setAttribute("id", "BK_19_"+part1_count.toString());
+    	div_1M_4_4.innerHTML="白蘿蔔";
+    	var div_1M_4_5 = document.createElement("div");
+    	div_1M_4_5.setAttribute("class", "grey-block");
+    	div_1M_4_5.setAttribute("id", "BK_20_"+part1_count.toString());
+    	div_1M_4_5.innerHTML="番茄";
+    	div_1M_4.appendChild(div_1M_4_1);
+    	div_1M_4.appendChild(div_1M_4_2);
+    	div_1M_4.appendChild(div_1M_4_3);
+    	div_1M_4.appendChild(div_1M_4_4);
+    	div_1M_4.appendChild(div_1M_4_5);
+    	div3.appendChild(div_1M_4);
+
+    	var div_1M_5 = document.createElement("div");
+    	div_1M_5.setAttribute("id", "other-block-inner");
+    	var div_1M_5_1 = document.createElement("div");
+    	div_1M_5_1.setAttribute("class", "grey-block");
+    	div_1M_5_1.setAttribute("id", "BK_21_"+part1_count.toString());
+    	div_1M_5_1.innerHTML="秀珍菇";
+    	var div_1M_5_2 = document.createElement("div");
+    	div_1M_5_2.setAttribute("class", "grey-block");
+    	div_1M_5_2.setAttribute("id", "BK_22_"+part1_count.toString());
+    	div_1M_5_2.innerHTML="木耳";
+    	var div_1M_5_3 = document.createElement("div");
+    	div_1M_5_3.setAttribute("class", "grey-block");
+    	div_1M_5_3.setAttribute("id", "BK_23_"+part1_count.toString());
+    	div_1M_5_3.innerHTML="小黃瓜";
+    	var div_1M_5_4 = document.createElement("div");
+    	div_1M_5_4.setAttribute("class", "grey-block");
+    	div_1M_5_4.setAttribute("id", "BK_24_"+part1_count.toString());
+    	div_1M_5_4.innerHTML="大黃瓜";
+    	var div_1M_5_5 = document.createElement("div");
+    	div_1M_5_5.setAttribute("class", "grey-block");
+    	div_1M_5_5.setAttribute("id", "BK_25_"+part1_count.toString());
+    	div_1M_5_5.innerHTML="櫛瓜";
+    	div_1M_5.appendChild(div_1M_5_1);
+    	div_1M_5.appendChild(div_1M_5_2);
+    	div_1M_5.appendChild(div_1M_5_3);
+    	div_1M_5.appendChild(div_1M_5_4);
+    	div_1M_5.appendChild(div_1M_5_5);
+    	div3.appendChild(div_1M_5);
+
+    	var div_1M_6 = document.createElement("div");
+    	div_1M_6.setAttribute("id", "other-block-inner");
+    	var div_1M_6_1 = document.createElement("div");
+    	div_1M_6_1.setAttribute("class", "grey-block");
+    	div_1M_6_1.setAttribute("id", "BK_26_"+part1_count.toString());
+    	div_1M_6_1.innerHTML="辣椒";
+    	var div_1M_6_2 = document.createElement("div");
+    	div_1M_6_2.setAttribute("class", "grey-block");
+    	div_1M_6_2.setAttribute("id", "BK_27_"+part1_count.toString());
+    	div_1M_6_2.innerHTML="青椒";
+    	var div_1M_6_3 = document.createElement("div");
+    	div_1M_6_3.setAttribute("class", "grey-block");
+    	div_1M_6_3.setAttribute("id", "BK_28_"+part1_count.toString());
+    	div_1M_6_3.innerHTML="甜椒";
+    	var div_1M_6_4 = document.createElement("div");
+    	div_1M_6_4.setAttribute("class", "grey-block");
+    	div_1M_6_4.setAttribute("id", "BK_29_"+part1_count.toString());
+    	div_1M_6_4.innerHTML="玉米";
+    	var div_1M_6_5 = document.createElement("div");
+    	div_1M_6_5.setAttribute("class", "grey-block");
+    	div_1M_6_5.setAttribute("id", "BK_30_"+part1_count.toString());
+    	div_1M_6_5.innerHTML="南瓜";
+    	div_1M_6.appendChild(div_1M_6_1);
+    	div_1M_6.appendChild(div_1M_6_2);
+    	div_1M_6.appendChild(div_1M_6_3);
+    	div_1M_6.appendChild(div_1M_6_4);
+    	div_1M_6.appendChild(div_1M_6_5);
+    	div3.appendChild(div_1M_6);
+
+    	var div_1M_7 = document.createElement("div");
+    	div_1M_7.setAttribute("id", "other-block-inner");
+    	var div_1M_7_1 = document.createElement("div");
+    	div_1M_7_1.setAttribute("class", "grey-block");
+    	div_1M_7_1.setAttribute("id", "BK_31_"+part1_count.toString());
+    	div_1M_7_1.innerHTML="芹菜";
+    	var div_1M_7_2 = document.createElement("div");
+    	div_1M_7_2.setAttribute("class", "grey-block");
+    	div_1M_7_2.setAttribute("id", "BK_32_"+part1_count.toString());
+    	div_1M_7_2.innerHTML="泡菜";
+    	var div_1M_7_3 = document.createElement("div");
+    	div_1M_7_3.setAttribute("class", "grey-block");
+    	div_1M_7_3.setAttribute("id", "BK_33_"+part1_count.toString());
+    	div_1M_7_3.innerHTML="海帶";
+    	div_1M_7.appendChild(div_1M_7_1);
+    	div_1M_7.appendChild(div_1M_7_2);
+    	div_1M_7.appendChild(div_1M_7_3);
+    	div3.appendChild(div_1M_7);
+
+
+    	
+    	div3.appendChild(div_2M);
+
+		var div_2M_1 = document.createElement("div");
+    	div_2M_1.setAttribute("id", "other-block-inner");
+    	var div_2M_1_1 = document.createElement("div");
+    	div_2M_1_1.setAttribute("class", "grey-block");
+    	div_2M_1_1.setAttribute("id", "BK_34_"+part1_count.toString());
+    	div_2M_1_1.innerHTML="鳳梨";
+    	var div_2M_1_2 = document.createElement("div");
+    	div_2M_1_2.setAttribute("class", "grey-block");
+    	div_2M_1_2.setAttribute("id", "BK_35_"+part1_count.toString());
+    	div_2M_1_2.innerHTML="蘋果";
+    	var div_2M_1_3 = document.createElement("div");
+    	div_2M_1_3.setAttribute("class", "grey-block");
+    	div_2M_1_3.setAttribute("id", "BK_36_"+part1_count.toString());
+    	div_2M_1_3.innerHTML="香蕉";
+    	var div_2M_1_4 = document.createElement("div");
+    	div_2M_1_4.setAttribute("class", "grey-block");
+    	div_2M_1_4.setAttribute("id", "BK_37_"+part1_count.toString());
+    	div_2M_1_4.innerHTML="檸檬";
+    	div_2M_1.appendChild(div_2M_1_1);
+    	div_2M_1.appendChild(div_2M_1_2);
+    	div_2M_1.appendChild(div_2M_1_3);
+    	div_2M_1.appendChild(div_2M_1_4);
+    	div3.appendChild(div_2M_1);
+    	
+    	div3.appendChild(div_3M);
+
+    	var div_3M_1 = document.createElement("div");
+    	div_3M_1.setAttribute("id", "other-block-inner");
+    	var div_3M_1_1 = document.createElement("div");
+    	div_3M_1_1.setAttribute("class", "grey-block");
+    	div_3M_1_1.setAttribute("id", "BK_38_"+part1_count.toString());
+    	div_3M_1_1.innerHTML="九層塔";
+    	var div_3M_1_2 = document.createElement("div");
+    	div_3M_1_2.setAttribute("class", "grey-block");
+    	div_3M_1_2.setAttribute("id", "BK_39_"+part1_count.toString());
+    	div_3M_1_2.innerHTML="薑";
+    	var div_3M_1_3 = document.createElement("div");
+    	div_3M_1_3.setAttribute("class", "grey-block");
+    	div_3M_1_3.setAttribute("id", "BK_40_"+part1_count.toString());
+    	div_3M_1_3.innerHTML="黑胡椒";
+    	var div_3M_1_4 = document.createElement("div");
+    	div_3M_1_4.setAttribute("class", "grey-block");
+    	div_3M_1_4.setAttribute("id", "BK_41_"+part1_count.toString());
+    	div_3M_1_4.innerHTML="醬油";
+    	var div_3M_1_5 = document.createElement("div");
+    	div_3M_1_5.setAttribute("class", "grey-block");
+    	div_3M_1_5.setAttribute("id", "BK_42_"+part1_count.toString());
+    	div_3M_1_5.innerHTML="白糖";
+    	div_3M_1.appendChild(div_3M_1_1);
+    	div_3M_1.appendChild(div_3M_1_2);
+    	div_3M_1.appendChild(div_3M_1_3);
+    	div_3M_1.appendChild(div_3M_1_4);
+    	div_3M_1.appendChild(div_3M_1_5);
+    	div3.appendChild(div_3M_1);
+
+    	var div_3M_2 = document.createElement("div");
+    	div_3M_2.setAttribute("id", "other-block-inner");
+    	var div_3M_2_1 = document.createElement("div");
+    	div_3M_2_1.setAttribute("class", "grey-block");
+    	div_3M_2_1.setAttribute("id", "BK_43_"+part1_count.toString());
+    	div_3M_2_1.innerHTML="紅糖";
+    	var div_3M_2_2 = document.createElement("div");
+    	div_3M_2_2.setAttribute("class", "grey-block");
+    	div_3M_2_2.setAttribute("id", "BK_44_"+part1_count.toString());
+    	div_3M_2_2.innerHTML="醋";
+    	var div_3M_2_3 = document.createElement("div");
+    	div_3M_2_3.setAttribute("class", "grey-block");
+    	div_3M_2_3.setAttribute("id", "BK_45_"+part1_count.toString());
+    	div_3M_2_3.innerHTML="糯米醋";
+    	var div_3M_2_4 = document.createElement("div");
+    	div_3M_2_4.setAttribute("class", "grey-block");
+    	div_3M_2_4.setAttribute("id", "BK_46_"+part1_count.toString());
+    	div_3M_2_4.innerHTML="橄欖油";
+    	var div_3M_2_5 = document.createElement("div");
+    	div_3M_2_5.setAttribute("class", "grey-block");
+    	div_3M_2_5.setAttribute("id", "BK_47_"+part1_count.toString());
+    	div_3M_2_5.innerHTML="味噌";
+    	div_3M_2.appendChild(div_3M_2_1);
+    	div_3M_2.appendChild(div_3M_2_2);
+    	div_3M_2.appendChild(div_3M_2_3);
+    	div_3M_2.appendChild(div_3M_2_4);
+    	div_3M_2.appendChild(div_3M_2_5);
+    	div3.appendChild(div_3M_2);
+
+    	var div_3M_3 = document.createElement("div");
+    	div_3M_3.setAttribute("id", "other-block-inner");
+    	var div_3M_3_1 = document.createElement("div");
+    	div_3M_3_1.setAttribute("class", "grey-block");
+    	div_3M_3_1.setAttribute("id", "BK_48_"+part1_count.toString());
+    	div_3M_3_1.innerHTML="番茄醬";
+    	var div_3M_3_2 = document.createElement("div");
+    	div_3M_3_2.setAttribute("class", "grey-block");
+    	div_3M_3_2.setAttribute("id", "BK_49_"+part1_count.toString());
+    	div_3M_3_2.innerHTML="蔥";
+    	var div_3M_3_3 = document.createElement("div");
+    	div_3M_3_3.setAttribute("class", "grey-block");
+    	div_3M_3_3.setAttribute("id", "BK_50_"+part1_count.toString());
+    	div_3M_3_3.innerHTML="蔥花";
+    	var div_3M_3_4 = document.createElement("div");
+    	div_3M_3_4.setAttribute("class", "grey-block");
+    	div_3M_3_4.setAttribute("id", "BK_51_"+part1_count.toString());
+    	div_3M_3_4.innerHTML="香油";
+    	var div_3M_3_5 = document.createElement("div");
+    	div_3M_3_5.setAttribute("class", "grey-block");
+    	div_3M_3_5.setAttribute("id", "BK_52_"+part1_count.toString());
+    	div_3M_3_5.innerHTML="沙拉油";
+    	div_3M_3.appendChild(div_3M_3_1);
+    	div_3M_3.appendChild(div_3M_3_2);
+    	div_3M_3.appendChild(div_3M_3_3);
+    	div_3M_3.appendChild(div_3M_3_4);
+    	div_3M_3.appendChild(div_3M_3_5);
+    	div3.appendChild(div_3M_3);
+
+
+    	var div_3M_4 = document.createElement("div");
+    	div_3M_4.setAttribute("id", "other-block-inner");
+    	var div_3M_4_1 = document.createElement("div");
+    	div_3M_4_1.setAttribute("class", "grey-block");
+    	div_3M_4_1.setAttribute("id", "BK_53_"+part1_count.toString());
+    	div_3M_4_1.innerHTML="麻油";
+    	var div_3M_4_2 = document.createElement("div");
+    	div_3M_4_2.setAttribute("class", "grey-block");
+    	div_3M_4_2.setAttribute("id", "BK_54_"+part1_count.toString());
+    	div_3M_4_2.innerHTML="冰糖";
+    	var div_3M_4_3 = document.createElement("div");
+    	div_3M_4_3.setAttribute("class", "grey-block");
+    	div_3M_4_3.setAttribute("id", "BK_55_"+part1_count.toString());
+    	div_3M_4_3.innerHTML="豆瓣醬";
+    	var div_3M_4_4 = document.createElement("div");
+    	div_3M_4_4.setAttribute("class", "grey-block");
+    	div_3M_4_4.setAttribute("id", "BK_56_"+part1_count.toString());
+    	div_3M_4_4.innerHTML="奶油";
+    	var div_3M_4_5 = document.createElement("div");
+    	div_3M_4_5.setAttribute("class", "grey-block");
+    	div_3M_4_5.setAttribute("id", "BK_57_"+part1_count.toString());
+    	div_3M_4_5.innerHTML="白醋";
+    	div_3M_4.appendChild(div_3M_4_1);
+    	div_3M_4.appendChild(div_3M_4_2);
+    	div_3M_4.appendChild(div_3M_4_3);
+    	div_3M_4.appendChild(div_3M_4_4);
+    	div_3M_4.appendChild(div_3M_4_5);
+    	div3.appendChild(div_3M_4);
+
+    	var div_3M_5 = document.createElement("div");
+    	div_3M_5.setAttribute("id", "other-block-inner");
+    	var div_3M_5_1 = document.createElement("div");
+    	div_3M_5_1.setAttribute("class", "grey-block");
+    	div_3M_5_1.setAttribute("id", "BK_58_"+part1_count.toString());
+    	div_3M_5_1.innerHTML="鹽";
+    	var div_3M_5_2 = document.createElement("div");
+    	div_3M_5_2.setAttribute("class", "grey-block");
+    	div_3M_5_2.setAttribute("id", "BK_59_"+part1_count.toString());
+    	div_3M_5_2.innerHTML="五香粉";
+    	var div_3M_5_3 = document.createElement("div");
+    	div_3M_5_3.setAttribute("class", "grey-block");
+    	div_3M_5_3.setAttribute("id", "BK_60_"+part1_count.toString());
+    	div_3M_5_3.innerHTML="美乃滋";
+    	var div_3M_5_4 = document.createElement("div");
+    	div_3M_5_4.setAttribute("class", "grey-block");
+    	div_3M_5_4.setAttribute("id", "BK_61_"+part1_count.toString());
+    	div_3M_5_4.innerHTML="烏醋";
+    	var div_3M_5_5 = document.createElement("div");
+    	div_3M_5_5.setAttribute("class", "grey-block");
+    	div_3M_5_5.setAttribute("id", "BK_62_"+part1_count.toString());
+    	div_3M_5_5.innerHTML="味醂";
+    	div_3M_5.appendChild(div_3M_5_1);
+    	div_3M_5.appendChild(div_3M_5_2);
+    	div_3M_5.appendChild(div_3M_5_3);
+    	div_3M_5.appendChild(div_3M_5_4);
+    	div_3M_5.appendChild(div_3M_5_5);
+    	div3.appendChild(div_3M_5);
+
+
+    	var div_3M_6 = document.createElement("div");
+    	div_3M_6.setAttribute("id", "other-block-inner");
+    	var div_3M_6_1 = document.createElement("div");
+    	div_3M_6_1.setAttribute("class", "grey-block");
+    	div_3M_6_1.setAttribute("id", "BK_63_"+part1_count.toString());
+    	div_3M_6_1.innerHTML="香油";
+    	var div_3M_6_2 = document.createElement("div");
+    	div_3M_6_2.setAttribute("class", "grey-block");
+    	div_3M_6_2.setAttribute("id", "BK_64_"+part1_count.toString());
+    	div_3M_6_2.innerHTML="白胡椒粉";
+    	var div_3M_6_3 = document.createElement("div");
+    	div_3M_6_3.setAttribute("class", "grey-block");
+    	div_3M_6_3.setAttribute("id", "BK_65_"+part1_count.toString());
+    	div_3M_6_3.innerHTML="沙拉醬";
+    	var div_3M_6_4 = document.createElement("div");
+    	div_3M_6_4.setAttribute("class", "grey-block");
+    	div_3M_6_4.setAttribute("id", "BK_66_"+part1_count.toString());
+    	div_3M_6_4.innerHTML="凱薩醬";
+    	var div_3M_6_5 = document.createElement("div");
+    	div_3M_6_5.setAttribute("class", "grey-block");
+    	div_3M_6_5.setAttribute("id", "BK_67_"+part1_count.toString());
+    	div_3M_6_5.innerHTML="紅椒粉";
+    	div_3M_6.appendChild(div_3M_6_1);
+    	div_3M_6.appendChild(div_3M_6_2);
+    	div_3M_6.appendChild(div_3M_6_3);
+    	div_3M_6.appendChild(div_3M_6_4);
+    	div_3M_6.appendChild(div_3M_6_5);
+    	div3.appendChild(div_3M_6);
+
+
+    	var div_3M_7 = document.createElement("div");
+    	div_3M_7.setAttribute("id", "other-block-inner");
+    	var div_3M_7_1 = document.createElement("div");
+    	div_3M_7_1.setAttribute("class", "grey-block");
+    	div_3M_7_1.setAttribute("id", "BK_68_"+part1_count.toString());
+    	div_3M_7_1.innerHTML="芥末醬";
+    	var div_3M_7_2 = document.createElement("div");
+    	div_3M_7_2.setAttribute("class", "grey-block");
+    	div_3M_7_2.setAttribute("id", "BK_69_"+part1_count.toString());
+    	div_3M_7_2.innerHTML="魚露";
+    	var div_3M_7_3 = document.createElement("div");
+    	div_3M_7_3.setAttribute("class", "grey-block");
+    	div_3M_7_3.setAttribute("id", "BK_70_"+part1_count.toString());
+    	div_3M_7_3.innerHTML="香茅";
+    	var div_3M_7_4 = document.createElement("div");
+    	div_3M_7_4.setAttribute("class", "grey-block");
+    	div_3M_7_4.setAttribute("id", "BK_71_"+part1_count.toString());
+    	div_3M_7_4.innerHTML="花椒";
+    	var div_3M_7_5 = document.createElement("div");
+    	div_3M_7_5.setAttribute("class", "grey-block");
+    	div_3M_7_5.setAttribute("id", "BK_72_"+part1_count.toString());
+    	div_3M_7_5.innerHTML="蜂蜜";
+    	div_3M_7.appendChild(div_3M_7_1);
+    	div_3M_7.appendChild(div_3M_7_2);
+    	div_3M_7.appendChild(div_3M_7_3);
+    	div_3M_7.appendChild(div_3M_7_4);
+    	div_3M_7.appendChild(div_3M_7_5);
+    	div3.appendChild(div_3M_7);
+
+    	var div_3M_8 = document.createElement("div");
+    	div_3M_8.setAttribute("id", "other-block-inner");
+    	var div_3M_8_1 = document.createElement("div");
+    	div_3M_8_1.setAttribute("class", "grey-block");
+    	div_3M_8_1.setAttribute("id", "BK_73_"+part1_count.toString());
+    	div_3M_8_1.innerHTML="黑麻油";
+    	div_3M_8.appendChild(div_3M_8_1);
+    	div3.appendChild(div_3M_8);
+    
+		div3.appendChild(div_4M);
+    	
+    	var div_4M_1 = document.createElement("div");
+    	div_4M_1.setAttribute("id", "other-block-inner");
+    	var div_4M_1_1 = document.createElement("div");
+    	div_4M_1_1.setAttribute("class", "grey-block");
+    	div_4M_1_1.setAttribute("id", "BK_74_"+part1_count.toString());
+    	div_4M_1_1.innerHTML="牛肉";
+    	var div_4M_1_2 = document.createElement("div");
+    	div_4M_1_2.setAttribute("class", "grey-block");
+    	div_4M_1_2.setAttribute("id", "BK_75_"+part1_count.toString());
+    	div_4M_1_2.innerHTML="豬肉";
+    	var div_4M_1_3 = document.createElement("div");
+    	div_4M_1_3.setAttribute("class", "grey-block");
+    	div_4M_1_3.setAttribute("id", "BK_76_"+part1_count.toString());
+    	div_4M_1_3.innerHTML="羊肉";
+    	var div_4M_1_4 = document.createElement("div");
+    	div_4M_1_4.setAttribute("class", "grey-block");
+    	div_4M_1_4.setAttribute("id", "BK_77_"+part1_count.toString());
+    	div_4M_1_4.innerHTML="雞肉";
+    	var div_4M_1_5 = document.createElement("div");
+    	div_4M_1_5.setAttribute("class", "grey-block");
+    	div_4M_1_5.setAttribute("id", "BK_78_"+part1_count.toString());
+    	div_4M_1_5.innerHTML="肉片";
+    	div_4M_1.appendChild(div_4M_1_1);
+    	div_4M_1.appendChild(div_4M_1_2);
+    	div_4M_1.appendChild(div_4M_1_3);
+    	div_4M_1.appendChild(div_4M_1_4);
+    	div_4M_1.appendChild(div_4M_1_5);
+    	div3.appendChild(div_4M_1);
+
+    	var div_4M_2 = document.createElement("div");
+    	div_4M_2.setAttribute("id", "other-block-inner");
+    	var div_4M_2_1 = document.createElement("div");
+    	div_4M_2_1.setAttribute("class", "grey-block");
+    	div_4M_2_1.setAttribute("id", "BK_79_"+part1_count.toString());
+    	div_4M_2_1.innerHTML="半雞";
+    	var div_4M_2_2 = document.createElement("div");
+    	div_4M_2_2.setAttribute("class", "grey-block");
+    	div_4M_2_2.setAttribute("id", "BK_80_"+part1_count.toString());
+    	div_4M_2_2.innerHTML="全雞";
+    	var div_4M_2_3 = document.createElement("div");
+    	div_4M_2_3.setAttribute("class", "grey-block");
+    	div_4M_2_3.setAttribute("id", "BK_81_"+part1_count.toString());
+    	div_4M_2_3.innerHTML="豬絞肉";
+    	var div_4M_2_4 = document.createElement("div");
+    	div_4M_2_4.setAttribute("class", "grey-block");
+    	div_4M_2_4.setAttribute("id", "BK_82_"+part1_count.toString());
+    	div_4M_2_4.innerHTML="肉絲";
+    	var div_4M_2_5 = document.createElement("div");
+    	div_4M_2_5.setAttribute("class", "grey-block");
+    	div_4M_2_5.setAttribute("id", "BK_83_"+part1_count.toString());
+    	div_4M_2_5.innerHTML="雞腿";
+    	div_4M_2.appendChild(div_4M_2_1);
+    	div_4M_2.appendChild(div_4M_2_2);
+    	div_4M_2.appendChild(div_4M_2_3);
+    	div_4M_2.appendChild(div_4M_2_4);
+    	div_4M_2.appendChild(div_4M_2_5);
+    	div3.appendChild(div_4M_2);
+
+    	var div_4M_3 = document.createElement("div");
+    	div_4M_3.setAttribute("id", "other-block-inner");
+    	var div_4M_3_1 = document.createElement("div");
+    	div_4M_3_1.setAttribute("class", "grey-block");
+    	div_4M_3_1.setAttribute("id", "BK_84_"+part1_count.toString());
+    	div_4M_3_1.innerHTML="雞胸";
+    	var div_4M_3_2 = document.createElement("div");
+    	div_4M_3_2.setAttribute("class", "grey-block");
+    	div_4M_3_2.setAttribute("id", "BK_85_"+part1_count.toString());
+    	div_4M_3_2.innerHTML="雞翅";
+    	var div_4M_3_3 = document.createElement("div");
+    	div_4M_3_3.setAttribute("class", "grey-block");
+    	div_4M_3_3.setAttribute("id", "BK_86_"+part1_count.toString());
+    	div_4M_3_3.innerHTML="牛肉塊";
+    	var div_4M_3_4 = document.createElement("div");
+    	div_4M_3_4.setAttribute("class", "grey-block");
+    	div_4M_3_4.setAttribute("id", "BK_87_"+part1_count.toString());
+    	div_4M_3_4.innerHTML="豬肉塊";
+    	var div_4M_3_5 = document.createElement("div");
+    	div_4M_3_5.setAttribute("class", "grey-block");
+    	div_4M_3_5.setAttribute("id", "BK_88_"+part1_count.toString());
+    	div_4M_3_5.innerHTML="雞肉塊";
+    	div_4M_3.appendChild(div_4M_3_1);
+    	div_4M_3.appendChild(div_4M_3_2);
+    	div_4M_3.appendChild(div_4M_3_3);
+    	div_4M_3.appendChild(div_4M_3_4);
+    	div_4M_3.appendChild(div_4M_3_5);
+    	div3.appendChild(div_4M_3);
+
+    	var div_4M_4 = document.createElement("div");
+    	div_4M_4.setAttribute("id", "other-block-inner");
+    	var div_4M_4_1 = document.createElement("div");
+    	div_4M_4_1.setAttribute("class", "grey-block");
+    	div_4M_4_1.setAttribute("id", "BK_89_"+part1_count.toString());
+    	div_4M_4_1.innerHTML="肉醬";
+    	var div_4M_4_2 = document.createElement("div");
+    	div_4M_4_2.setAttribute("class", "grey-block");
+    	div_4M_4_2.setAttribute("id", "BK_90_"+part1_count.toString());
+    	div_4M_4_2.innerHTML="牛絞肉";
+    	var div_4M_4_3 = document.createElement("div");
+    	div_4M_4_3.setAttribute("class", "grey-block");
+    	div_4M_4_3.setAttribute("id", "BK_91_"+part1_count.toString());
+    	div_4M_4_3.innerHTML="培根";
+    	var div_4M_4_4 = document.createElement("div");
+    	div_4M_4_4.setAttribute("class", "grey-block");
+    	div_4M_4_4.setAttribute("id", "BK_92_"+part1_count.toString());
+    	div_4M_4_4.innerHTML="五花肉片";
+    	var div_4M_4_5 = document.createElement("div");
+    	div_4M_4_5.setAttribute("class", "grey-block");
+    	div_4M_4_5.setAttribute("id", "BK_93_"+part1_count.toString());
+    	div_4M_4_5.innerHTML="牛五花肉";
+    	div_4M_4.appendChild(div_4M_4_1);
+    	div_4M_4.appendChild(div_4M_4_2);
+    	div_4M_4.appendChild(div_4M_4_3);
+    	div_4M_4.appendChild(div_4M_4_4);
+    	div_4M_4.appendChild(div_4M_4_5);
+    	div3.appendChild(div_4M_4);
+
+
+    	var div_4M_5 = document.createElement("div");
+    	div_4M_5.setAttribute("id", "other-block-inner");
+    	var div_4M_5_1 = document.createElement("div");
+    	div_4M_5_1.setAttribute("class", "grey-block");
+    	div_4M_5_1.setAttribute("id", "BK_94_"+part1_count.toString());
+    	div_4M_5_1.innerHTML="豬五花肉";
+    	div_4M_5.appendChild(div_4M_5_1);
+    	div3.appendChild(div_4M_5);
+
+    	div3.appendChild(div_5M);
+    	var div_5M_1 = document.createElement("div");
+    	div_5M_1.setAttribute("id", "other-block-inner");
+    	var div_5M_1_1 = document.createElement("div");
+    	div_5M_1_1.setAttribute("class", "grey-block");
+    	div_5M_1_1.setAttribute("id", "BK_95_"+part1_count.toString());
+    	div_5M_1_1.innerHTML="蝦仁";
+    	var div_5M_1_2 = document.createElement("div");
+    	div_5M_1_2.setAttribute("class", "grey-block");
+    	div_5M_1_2.setAttribute("id", "BK_96_"+part1_count.toString());
+    	div_5M_1_2.innerHTML="蝦子";
+    	var div_5M_1_3 = document.createElement("div");
+    	div_5M_1_3.setAttribute("class", "grey-block");
+    	div_5M_1_3.setAttribute("id", "BK_97_"+part1_count.toString());
+    	div_5M_1_3.innerHTML="小卷";
+    	var div_5M_1_4 = document.createElement("div");
+    	div_5M_1_4.setAttribute("class", "grey-block");
+    	div_5M_1_4.setAttribute("id", "BK_98_"+part1_count.toString());
+    	div_5M_1_4.innerHTML="章魚";
+    	var div_5M_1_5 = document.createElement("div");
+    	div_5M_1_5.setAttribute("class", "grey-block");
+    	div_5M_1_5.setAttribute("id", "BK_99_"+part1_count.toString());
+    	div_5M_1_5.innerHTML="透抽";
+    	div_5M_1.appendChild(div_5M_1_1);
+    	div_5M_1.appendChild(div_5M_1_2);
+    	div_5M_1.appendChild(div_5M_1_3);
+    	div_5M_1.appendChild(div_5M_1_4);
+    	div_5M_1.appendChild(div_5M_1_5);
+    	div3.appendChild(div_5M_1);
+
+    	var div_5M_2 = document.createElement("div");
+    	div_5M_2.setAttribute("id", "other-block-inner");
+    	var div_5M_2_1 = document.createElement("div");
+    	div_5M_2_1.setAttribute("class", "grey-block");
+    	div_5M_2_1.setAttribute("id", "BK_100_"+part1_count.toString());
+    	div_5M_2_1.innerHTML="草蝦";
+    	var div_5M_2_2 = document.createElement("div");
+    	div_5M_2_2.setAttribute("class", "grey-block");
+    	div_5M_2_2.setAttribute("id", "BK_101_"+part1_count.toString());
+    	div_5M_2_2.innerHTML="白蝦";
+    	var div_5M_2_3 = document.createElement("div");
+    	div_5M_2_3.setAttribute("class", "grey-block");
+    	div_5M_2_3.setAttribute("id", "BK_102_"+part1_count.toString());
+    	div_5M_2_3.innerHTML="吳郭魚";
+    	var div_5M_2_4 = document.createElement("div");
+    	div_5M_2_4.setAttribute("class", "grey-block");
+    	div_5M_2_4.setAttribute("id", "BK_103_"+part1_count.toString());
+    	div_5M_2_4.innerHTML="白鯧魚";
+    	var div_5M_2_5 = document.createElement("div");
+    	div_5M_2_5.setAttribute("class", "grey-block");
+    	div_5M_2_5.setAttribute("id", "BK_104_"+part1_count.toString());
+    	div_5M_2_5.innerHTML="秋刀魚";
+    	div_5M_2.appendChild(div_5M_2_1);
+    	div_5M_2.appendChild(div_5M_2_2);
+    	div_5M_2.appendChild(div_5M_2_3);
+    	div_5M_2.appendChild(div_5M_2_4);
+    	div_5M_2.appendChild(div_5M_2_5);
+    	div3.appendChild(div_5M_2);
+
+    	var div_5M_3 = document.createElement("div");
+    	div_5M_3.setAttribute("id", "other-block-inner");
+    	var div_5M_3_1 = document.createElement("div");
+    	div_5M_3_1.setAttribute("class", "grey-block");
+    	div_5M_3_1.setAttribute("id", "BK_105_"+part1_count.toString());
+    	div_5M_3_1.innerHTML="鮪魚";
+    	var div_5M_3_2 = document.createElement("div");
+    	div_5M_3_2.setAttribute("class", "grey-block");
+    	div_5M_3_2.setAttribute("id", "BK_106_"+part1_count.toString());
+    	div_5M_3_2.innerHTML="鮭魚";
+    	var div_5M_3_3 = document.createElement("div");
+    	div_5M_3_3.setAttribute("class", "grey-block");
+    	div_5M_3_3.setAttribute("id", "BK_107_"+part1_count.toString());
+    	div_5M_3_3.innerHTML="柳葉魚";
+    	var div_5M_3_4 = document.createElement("div");
+    	div_5M_3_4.setAttribute("class", "grey-block");
+    	div_5M_3_4.setAttribute("id", "BK_108_"+part1_count.toString());
+    	div_5M_3_4.innerHTML="旗魚";
+    	var div_5M_3_5 = document.createElement("div");
+    	div_5M_3_5.setAttribute("class", "grey-block");
+    	div_5M_3_5.setAttribute("id", "BK_109_"+part1_count.toString());
+    	div_5M_3_5.innerHTML="虱目魚";
+    	div_5M_3.appendChild(div_5M_3_1);
+    	div_5M_3.appendChild(div_5M_3_2);
+    	div_5M_3.appendChild(div_5M_3_3);
+    	div_5M_3.appendChild(div_5M_3_4);
+    	div_5M_3.appendChild(div_5M_3_5);
+    	div3.appendChild(div_5M_3);
+
+
+    	var div_5M_4 = document.createElement("div");
+    	div_5M_4.setAttribute("id", "other-block-inner");
+    	var div_5M_4_1 = document.createElement("div");
+    	div_5M_4_1.setAttribute("class", "grey-block");
+    	div_5M_4_1.setAttribute("id", "BK_110_"+part1_count.toString());
+    	div_5M_4_1.innerHTML="沙丁魚";
+    	var div_5M_4_2 = document.createElement("div");
+    	div_5M_4_2.setAttribute("class", "grey-block");
+    	div_5M_4_2.setAttribute("id", "BK_111_"+part1_count.toString());
+    	div_5M_4_2.innerHTML="黃魚";
+    	var div_5M_4_3 = document.createElement("div");
+    	div_5M_4_3.setAttribute("class", "grey-block");
+    	div_5M_4_3.setAttribute("id", "BK_112_"+part1_count.toString());
+    	div_5M_4_3.innerHTML="鯖魚";
+    	var div_5M_4_4 = document.createElement("div");
+    	div_5M_4_4.setAttribute("class", "grey-block");
+    	div_5M_4_4.setAttribute("id", "BK_113_"+part1_count.toString());
+    	div_5M_4_4.innerHTML="吻仔魚";
+    	var div_5M_4_5 = document.createElement("div");
+    	div_5M_4_5.setAttribute("class", "grey-block");
+    	div_5M_4_5.setAttribute("id", "BK_114_"+part1_count.toString());
+    	div_5M_4_5.innerHTML="螃蟹";
+    	div_5M_4.appendChild(div_5M_4_1);
+    	div_5M_4.appendChild(div_5M_4_2);
+    	div_5M_4.appendChild(div_5M_4_3);
+    	div_5M_4.appendChild(div_5M_4_4);
+    	div_5M_4.appendChild(div_5M_4_5);
+    	div3.appendChild(div_5M_4);
+
+
+    	var div_5M_5 = document.createElement("div");
+    	div_5M_5.setAttribute("id", "other-block-inner");
+    	var div_5M_5_1 = document.createElement("div");
+    	div_5M_5_1.setAttribute("class", "grey-block");
+    	div_5M_5_1.setAttribute("id", "BK_115_"+part1_count.toString());
+    	div_5M_5_1.innerHTML="蟹肉";
+    	var div_5M_5_2 = document.createElement("div");
+    	div_5M_5_2.setAttribute("class", "grey-block");
+    	div_5M_5_2.setAttribute("id", "BK_116_"+part1_count.toString());
+    	div_5M_5_2.innerHTML="干貝";
+    	var div_5M_5_3 = document.createElement("div");
+    	div_5M_5_3.setAttribute("class", "grey-block");
+    	div_5M_5_3.setAttribute("id", "BK_117_"+part1_count.toString());
+    	div_5M_5_3.innerHTML="花枝";
+    	var div_5M_5_4 = document.createElement("div");
+    	div_5M_5_4.setAttribute("class", "grey-block");
+    	div_5M_5_4.setAttribute("id", "BK_118_"+part1_count.toString());
+    	div_5M_5_4.innerHTML="小管";
+    	var div_5M_5_5 = document.createElement("div");
+    	div_5M_5_5.setAttribute("class", "grey-block");
+    	div_5M_5_5.setAttribute("id", "BK_119_"+part1_count.toString());
+    	div_5M_5_5.innerHTML="魚卵";
+    	div_5M_5.appendChild(div_5M_5_1);
+    	div_5M_5.appendChild(div_5M_5_2);
+    	div_5M_5.appendChild(div_5M_5_3);
+    	div_5M_5.appendChild(div_5M_5_4);
+    	div_5M_5.appendChild(div_5M_5_5);
+    	div3.appendChild(div_5M_5);
+
+    	var div_5M_6 = document.createElement("div");
+    	div_5M_6.setAttribute("id", "other-block-inner");
+    	var div_5M_6_1 = document.createElement("div");
+    	div_5M_6_1.setAttribute("class", "grey-block");
+    	div_5M_6_1.setAttribute("id", "BK_120_"+part1_count.toString());
+    	div_5M_6_1.innerHTML="帆立貝";
+    	var div_5M_6_2 = document.createElement("div");
+    	div_5M_6_2.setAttribute("class", "grey-block");
+    	div_5M_6_2.setAttribute("id", "BK_121_"+part1_count.toString());
+    	div_5M_6_2.innerHTML="螺肉";
+    	var div_5M_6_3 = document.createElement("div");
+    	div_5M_6_3.setAttribute("class", "grey-block");
+    	div_5M_6_3.setAttribute("id", "BK_122_"+part1_count.toString());
+    	div_5M_6_3.innerHTML="蛤";
+    	var div_5M_6_4 = document.createElement("div");
+    	div_5M_6_4.setAttribute("class", "grey-block");
+    	div_5M_6_4.setAttribute("id", "BK_123_"+part1_count.toString());
+    	div_5M_6_4.innerHTML="蜆";
+    	var div_5M_6_5 = document.createElement("div");
+    	div_5M_6_5.setAttribute("class", "grey-block");
+    	div_5M_6_5.setAttribute("id", "BK_124_"+part1_count.toString());
+    	div_5M_6_5.innerHTML="海瓜子";
+    	div_5M_6.appendChild(div_5M_6_1);
+    	div_5M_6.appendChild(div_5M_6_2);
+    	div_5M_6.appendChild(div_5M_6_3);
+    	div_5M_6.appendChild(div_5M_6_4);
+    	div_5M_6.appendChild(div_5M_6_5);
+    	div3.appendChild(div_5M_6);
+
+    	var div_5M_7 = document.createElement("div");
+    	div_5M_7.setAttribute("id", "other-block-inner");
+    	var div_5M_7_1 = document.createElement("div");
+    	div_5M_7_1.setAttribute("class", "grey-block");
+    	div_5M_7_1.setAttribute("id", "BK_125_"+part1_count.toString());
+    	div_5M_7_1.innerHTML="比目魚";
+    	var div_5M_7_2 = document.createElement("div");
+    	div_5M_7_2.setAttribute("class", "grey-block");
+    	div_5M_7_2.setAttribute("id", "BK_126_"+part1_count.toString());
+    	div_5M_7_2.innerHTML="海膽";
+    	var div_5M_7_3 = document.createElement("div");
+    	div_5M_7_3.setAttribute("class", "grey-block");
+    	div_5M_7_3.setAttribute("id", "BK_127_"+part1_count.toString());
+    	div_5M_7_3.innerHTML="魷魚";
+    	div_5M_7.appendChild(div_5M_7_1);
+    	div_5M_7.appendChild(div_5M_7_2);
+    	div_5M_7.appendChild(div_5M_7_3);
+    	div3.appendChild(div_5M_7);
+
+    	div3.appendChild(div_6M);
+
+    	var div_6M_1 = document.createElement("div");
+    	div_6M_1.setAttribute("id", "other-block-inner");
+    	var div_6M_1_1 = document.createElement("div");
+    	div_6M_1_1.setAttribute("class", "grey-block");
+    	div_6M_1_1.setAttribute("id", "BK_128_"+part1_count.toString());
+    	div_6M_1_1.innerHTML="米";
+    	var div_6M_1_2 = document.createElement("div");
+    	div_6M_1_2.setAttribute("class", "grey-block");
+    	div_6M_1_2.setAttribute("id", "BK_129_"+part1_count.toString());
+    	div_6M_1_2.innerHTML="烏龍麵";
+    	var div_6M_1_3 = document.createElement("div");
+    	div_6M_1_3.setAttribute("class", "grey-block");
+    	div_6M_1_3.setAttribute("id", "BK_130_"+part1_count.toString());
+    	div_6M_1_3.innerHTML="米粉";
+    	var div_6M_1_4 = document.createElement("div");
+    	div_6M_1_4.setAttribute("class", "grey-block");
+    	div_6M_1_4.setAttribute("id", "BK_131_"+part1_count.toString());
+    	div_6M_1_4.innerHTML="冬粉";
+    	var div_6M_1_5 = document.createElement("div");
+    	div_6M_1_5.setAttribute("class", "grey-block");
+    	div_6M_1_5.setAttribute("id", "BK_132_"+part1_count.toString());
+    	div_6M_1_5.innerHTML="義大利麵";
+    	div_6M_1.appendChild(div_6M_1_1);
+    	div_6M_1.appendChild(div_6M_1_2);
+    	div_6M_1.appendChild(div_6M_1_3);
+    	div_6M_1.appendChild(div_6M_1_4);
+    	div_6M_1.appendChild(div_6M_1_5);
+    	div3.appendChild(div_6M_1);
+
+
+    	var div_6M_2 = document.createElement("div");
+    	div_6M_2.setAttribute("id", "other-block-inner");
+    	var div_6M_2_1 = document.createElement("div");
+    	div_6M_2_1.setAttribute("class", "grey-block");
+    	div_6M_2_1.setAttribute("id", "BK_133_"+part1_count.toString());
+    	div_6M_2_1.innerHTML="筆管麵";
+    	var div_6M_2_2 = document.createElement("div");
+    	div_6M_2_2.setAttribute("class", "grey-block");
+    	div_6M_2_2.setAttribute("id", "BK_134_"+part1_count.toString());
+    	div_6M_2_2.innerHTML="吐司";
+    	var div_6M_2_3 = document.createElement("div");
+    	div_6M_2_3.setAttribute("class", "grey-block");
+    	div_6M_2_3.setAttribute("id", "BK_135_"+part1_count.toString());
+    	div_6M_2_3.innerHTML="麵包";
+    	var div_6M_2_4 = document.createElement("div");
+    	div_6M_2_4.setAttribute("class", "grey-block");
+    	div_6M_2_4.setAttribute("id", "BK_136_"+part1_count.toString());
+    	div_6M_2_4.innerHTML="漢堡麵包";
+    	div_6M_2.appendChild(div_6M_2_1);
+    	div_6M_2.appendChild(div_6M_2_2);
+    	div_6M_2.appendChild(div_6M_2_3);
+    	div_6M_2.appendChild(div_6M_2_4);
+    	div3.appendChild(div_6M_2);
+
+
+    	div3.appendChild(div_7M);
+
+
+    	var div_7M_1 = document.createElement("div");
+    	div_7M_1.setAttribute("id", "other-block-inner");
+    	var div_7M_1_1 = document.createElement("div");
+    	div_7M_1_1.setAttribute("class", "grey-block");
+    	div_7M_1_1.setAttribute("id", "BK_137_"+part1_count.toString());
+    	div_7M_1_1.innerHTML="樹薯粉";
+    	var div_7M_1_2 = document.createElement("div");
+    	div_7M_1_2.setAttribute("class", "grey-block");
+    	div_7M_1_2.setAttribute("id", "BK_138_"+part1_count.toString());
+    	div_7M_1_2.innerHTML="地瓜粉";
+    	var div_7M_1_3 = document.createElement("div");
+    	div_7M_1_3.setAttribute("class", "grey-block");
+    	div_7M_1_3.setAttribute("id", "BK_139_"+part1_count.toString());
+    	div_7M_1_3.innerHTML="太白粉";
+    	var div_7M_1_4 = document.createElement("div");
+    	div_7M_1_4.setAttribute("class", "grey-block");
+    	div_7M_1_4.setAttribute("id", "BK_140_"+part1_count.toString());
+    	div_7M_1_4.innerHTML="豆腐";
+    	var div_7M_1_5 = document.createElement("div");
+    	div_7M_1_5.setAttribute("class", "grey-block");
+    	div_7M_1_5.setAttribute("id", "BK_141_"+part1_count.toString());
+    	div_7M_1_5.innerHTML="雞蛋";
+    	div_7M_1.appendChild(div_7M_1_1);
+    	div_7M_1.appendChild(div_7M_1_2);
+    	div_7M_1.appendChild(div_7M_1_3);
+    	div_7M_1.appendChild(div_7M_1_4);
+    	div_7M_1.appendChild(div_7M_1_5);
+    	div3.appendChild(div_7M_1);
+
+    	var div_7M_2 = document.createElement("div");
+    	div_7M_2.setAttribute("id", "other-block-inner");
+    	var div_7M_2_1 = document.createElement("div");
+    	div_7M_2_1.setAttribute("class", "grey-block");
+    	div_7M_2_1.setAttribute("id", "BK_142_"+part1_count.toString());
+    	div_7M_2_1.innerHTML="肉鬆";
+    	var div_7M_2_2 = document.createElement("div");
+    	div_7M_2_2.setAttribute("class", "grey-block");
+    	div_7M_2_2.setAttribute("id", "BK_143_"+part1_count.toString());
+    	div_7M_2_2.innerHTML="起司";
+    	var div_7M_2_3 = document.createElement("div");
+    	div_7M_2_3.setAttribute("class", "grey-block");
+    	div_7M_2_3.setAttribute("id", "BK_144_"+part1_count.toString());
+    	div_7M_2_3.innerHTML="糯米粉";
+    	var div_7M_2_4 = document.createElement("div");
+    	div_7M_2_4.setAttribute("class", "grey-block");
+    	div_7M_2_4.setAttribute("id", "BK_145_"+part1_count.toString());
+    	div_7M_2_4.innerHTML="玉米粉";
+    	var div_7M_2_5 = document.createElement("div");
+    	div_7M_2_5.setAttribute("class", "grey-block");
+    	div_7M_2_5.setAttribute("id", "BK_146_"+part1_count.toString());
+    	div_7M_2_5.innerHTML="抹茶粉";
+    	div_7M_2.appendChild(div_7M_2_1);
+    	div_7M_2.appendChild(div_7M_2_2);
+    	div_7M_2.appendChild(div_7M_2_3);
+    	div_7M_2.appendChild(div_7M_2_4);
+    	div_7M_2.appendChild(div_7M_2_5);
+    	div3.appendChild(div_7M_2);
+
+    	var div_7M_3 = document.createElement("div");
+    	div_7M_3.setAttribute("id", "other-block-inner");
+    	var div_7M_3_1 = document.createElement("div");
+    	div_7M_3_1.setAttribute("class", "grey-block");
+    	div_7M_3_1.setAttribute("id", "BK_147_"+part1_count.toString());
+    	div_7M_3_1.innerHTML="可可粉";
+    	var div_7M_3_2 = document.createElement("div");
+    	div_7M_3_2.setAttribute("class", "grey-block");
+    	div_7M_3_2.setAttribute("id", "BK_148_"+part1_count.toString());
+    	div_7M_3_2.innerHTML="杏仁片";
+    	var div_7M_3_3 = document.createElement("div");
+    	div_7M_3_3.setAttribute("class", "grey-block");
+    	div_7M_3_3.setAttribute("id", "BK_149_"+part1_count.toString());
+    	div_7M_3_3.innerHTML="牛奶";
+    	var div_7M_3_4 = document.createElement("div");
+    	div_7M_3_4.setAttribute("class", "grey-block");
+    	div_7M_3_4.setAttribute("id", "BK_150_"+part1_count.toString());
+    	div_7M_3_4.innerHTML="泡打粉";
+    	var div_7M_3_5 = document.createElement("div");
+    	div_7M_3_5.setAttribute("class", "grey-block");
+    	div_7M_3_5.setAttribute("id", "BK_151_"+part1_count.toString());
+    	div_7M_3_5.innerHTML="巧克力";
+    	div_7M_3.appendChild(div_7M_3_1);
+    	div_7M_3.appendChild(div_7M_3_2);
+    	div_7M_3.appendChild(div_7M_3_3);
+    	div_7M_3.appendChild(div_7M_3_4);
+    	div_7M_3.appendChild(div_7M_3_5);
+    	div3.appendChild(div_7M_3);
+
+    	var div_7M_4 = document.createElement("div");
+    	div_7M_4.setAttribute("id", "other-block-inner");
+    	var div_7M_4_1 = document.createElement("div");
+    	div_7M_4_1.setAttribute("class", "grey-block");
+    	div_7M_4_1.setAttribute("id", "BK_152_"+part1_count.toString());
+    	div_7M_4_1.innerHTML="杏仁";
+    	var div_7M_4_2 = document.createElement("div");
+    	div_7M_4_2.setAttribute("class", "grey-block");
+    	div_7M_4_2.setAttribute("id", "BK_153_"+part1_count.toString());
+    	div_7M_4_2.innerHTML="杏仁粉";
+    	var div_7M_4_3 = document.createElement("div");
+    	div_7M_4_3.setAttribute("class", "grey-block");
+    	div_7M_4_3.setAttribute("id", "BK_154_"+part1_count.toString());
+    	div_7M_4_3.innerHTML="月桂葉";
+    	var div_7M_4_4 = document.createElement("div");
+    	div_7M_4_4.setAttribute("class", "grey-block");
+    	div_7M_4_4.setAttribute("id", "BK_155_"+part1_count.toString());
+    	div_7M_4_4.innerHTML="咖哩";
+    	var div_7M_4_5 = document.createElement("div");
+    	div_7M_4_5.setAttribute("class", "grey-block");
+    	div_7M_4_5.setAttribute("id", "BK_156_"+part1_count.toString());
+    	div_7M_4_5.innerHTML="綠咖哩";
+    	div_7M_4.appendChild(div_7M_4_1);
+    	div_7M_4.appendChild(div_7M_4_2);
+    	div_7M_4.appendChild(div_7M_4_3);
+    	div_7M_4.appendChild(div_7M_4_4);
+    	div_7M_4.appendChild(div_7M_4_5);
+    	div3.appendChild(div_7M_4);
+
+    	var div_7M_5 = document.createElement("div");
+    	div_7M_5.setAttribute("id", "other-block-inner");
+    	var div_7M_5_1 = document.createElement("div");
+    	div_7M_5_1.setAttribute("class", "grey-block");
+    	div_7M_5_1.setAttribute("id", "BK_157_"+part1_count.toString());
+    	div_7M_5_1.innerHTML="中筋麵粉";
+    	var div_7M_5_2 = document.createElement("div");
+    	div_7M_5_2.setAttribute("class", "grey-block");
+    	div_7M_5_2.setAttribute("id", "BK_158_"+part1_count.toString());
+    	div_7M_5_2.innerHTML="低筋麵粉";
+    	var div_7M_5_3 = document.createElement("div");
+    	div_7M_5_3.setAttribute("class", "grey-block");
+    	div_7M_5_3.setAttribute("id", "BK_159_"+part1_count.toString());
+    	div_7M_5_3.innerHTML="蒜頭";
+    	var div_7M_5_4 = document.createElement("div");
+    	div_7M_5_4.setAttribute("class", "grey-block");
+    	div_7M_5_4.setAttribute("id", "BK_160_"+part1_count.toString());
+    	div_7M_5_4.innerHTML="麵粉";
+    	div_7M_5.appendChild(div_7M_5_1);
+    	div_7M_5.appendChild(div_7M_5_2);
+    	div_7M_5.appendChild(div_7M_5_3);
+    	div_7M_5.appendChild(div_7M_5_4);
+    	div3.appendChild(div_7M_5);
+
+    	
+    	div.appendChild(div3);
+
+
+		part1.appendChild(div3);
+
+    	var custom = document.getElementById("arrow"+part1_count.toString());
+	    var other = document.getElementById("other-block"+part1_count.toString());
+	    var input666 = document.createElement("input");
+	    input666.setAttribute("type", "checkbox");
+	    input666.setAttribute("style", "display:none;");
+	    input666.setAttribute("id", "check"+part1_count.toString());
+	    part1.appendChild(input666);
+
+	    custom.addEventListener('click', function() {
+	    	if (document.getElementById("check"+part1_count.toString()).checked == false) {
+	    		other.style.cssText  = 'display:flex;';
+	    		document.getElementById("check"+part1_count.toString()).checked=true;
+	        }
+
+	        else if (document.getElementById("check"+part1_count.toString()).checked == true) {
+	    		other.style.cssText  = 'display:none;';
+	    		document.getElementById("check"+part1_count.toString()).checked=false;
+	        }
+	    });
+
+	    var dish_name_other = document.getElementById("dish_name_fooP"+part1_count.toString());
+		for(i=1;i<161;i++){
+	        (function(x) {
+	        	var g_block = document.getElementById('BK_'+x.toString()+"_"+part1_count.toString())
+	            g_block.addEventListener('click', function()
+	            {
+	            	dish_name_other.placeholder=g_block.innerHTML;
+	            	other.style.cssText  = 'display:none;';
+	    			add1.style.cssText  = 'display: contents; font-size:30px;';
+	    			add2.style.cssText  = 'display: contents; font-size:30px;';
+	    			other.style.cssText  = 'display:none;';
+	    			document.getElementById("check"+part1_count.toString()).checked=false;    
+	            });
+	        })(i)
+	    }
+    });
+
+    add2.addEventListener('click', function() {
+    	part2_count=part2_count+1;
+    	var div = document.createElement("input");
+    	div.setAttribute("type", "text");
+    	div.setAttribute("id", "part2_"+part2_count.toString());
+    	div.setAttribute("placeholder", "輸入烹飪步驟");
+    	div.setAttribute("style", "font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 100%; height: 70px; margin-bottom:10px;");
+    	//var i = document.createElement("i");
+    	//i.setAttribute("class", "fas fa-minus-circle");
+    	//i.setAttribute("style", "size:13px; color:#ADADAD; margin-left:10px; margin-bottom:10px;");
+    	part2.appendChild(div);
+    	//part2.appendChild(i);
+    });
+
+    add4.addEventListener('click', function() {
+    	part4_count=part4_count+1;
+    	var div1 = document.createElement("div");
+    	div1.setAttribute("id","flexx");
+    	
+    	var input1 = document.createElement("input");
+    	input1.setAttribute("type","text");
+    	input1.setAttribute("id","finalll"+part4_count.toString());
+    	input1.setAttribute("placeholder","輸入食材名稱");
+    	input1.setAttribute("style","font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 330px; height: 70px; margin-bottom:10px;");
+    	var input2 = document.createElement("input");
+    	input2.setAttribute("type","text");
+    	input2.setAttribute("id","finalll_name"+part4_count.toString());
+    	input2.setAttribute("placeholder","食材份量");
+    	input2.setAttribute("style","font-family: 'PingFangTC', '微軟正黑體', sans-serif; font-weight:bold; font-size:40px; border-radius: 10px; background: #FCFCFC; color: #3C3C3C; width: 48%; height: 70px; margin-bottom:10px; margin-left:2%;");
+    	div1.appendChild(input1);
+    	div1.appendChild(input2);
+    	part1.appendChild(div1);
+    });
+
+    //檔案上傳
+    var firebaseConfig = {
+	    apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+	    authDomain: "test-4fa88.firebaseapp.com",
+	    databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+	    projectId: "test-4fa88",
+	    storageBucket: "test-4fa88.appspot.com",
+	    messagingSenderId: "951903532283",
+	    appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+	    measurementId: "G-NSP6DRS2MS"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+
+    let db=firebase.firestore();
+
+    let picture_part=document.getElementById("picture_part");
+	add3.addEventListener('click', function() {
+		part3_count=part3_count+1;
+		var div = document.createElement("input");
+		div.setAttribute("type", "file");
+		div.setAttribute("id", "add3_"+part3_count.toString());
+		div.setAttribute("value", "upload");
+		picture_part.appendChild(div);
+	});
+
+    //上傳食譜及圖片1
+    let this_id=Math.random();
+    let empty1=""
+    function finalPicture(x){
+    	var emptyWhat=document.getElementById("SSS").value
+    	emptyWhat=emptyWhat.replace("/","");
+    	var emptyAA=""
+		if (x<9){
+			emptyAA="0"+(x+1).toString();
+		}
+		else{
+			emptyAA=x.toString();
+		}
+    	console.log(emptyWhat)
+    	console.log(empty1)
+    	console.log(emptyAA)
+    	var fileRef = firebase.storage().ref('photo'+this_id.toString()+'/'+document.getElementById("add3_"+x.toString()).value);
+	    fileRef.getDownloadURL().then(function(url) {
+	        db.collection("食譜").doc("02").collection(emptyWhat.toString()).doc(empty1.toString()).collection("link").doc(emptyAA.toString()).set({
+			  	LINK:url.toString()
+			});
+	    })
+	}
+
+	//判斷是否有為空的選項
+	
+
+	
+	//上傳食譜及圖片2
+	let size1=0;
+	document.getElementById('choose1').addEventListener('click', function() {
+		let judge=0;
+		if (document.getElementById("SSS").value=="請選擇菜餚種類"){
+			judge=judge+1
+		}
+		for(i=1;i<=part1_count;i++){
+			if (document.getElementById("dish_name_fooP"+i.toString()).value=="" || document.getElementById("dish_name"+i.toString()).value==""){
+				judge=judge+1
+			}
+		}
+		for(i=1;i<=part2_count;i++){
+			if (document.getElementById("part2_"+i.toString()).value==""){
+				judge=judge+1
+			}
+		}
+		for(i=1;i<=part4_count;i++){
+			if (document.getElementById("finalll"+i.toString()).value=="" || document.getElementById("finalll_name"+i.toString()).value==""){
+				judge=judge+1
+			}
+		}
+		if (judge==0){
+	    	var emptyWhat=document.getElementById("SSS").value
+	    	emptyWhat=emptyWhat.replace("/","");
+	    	db.collection("食譜").doc("02").collection(emptyWhat).get().then(snap => {
+	   			size1 = snap.size;
+	   			if (size1<9){
+				empty1="0"+(size1+1).toString();
+				}
+				else{
+					empty1=(size1+1).toString();
+				}
+				db.collection("食譜").doc("02").collection(emptyWhat).doc(empty1).set({
+	  				name:document.getElementById('dish_nameA').value
+				});
+
+				let dish_name_fooP_arr=[]
+				let dish_name_arr=[]
+				for(i=0;i<=part1_count;i++){
+					(function(x) {
+						dish_name_fooP_arr.push(document.getElementById("dish_name_fooP"+x.toString()).placeholder);
+						dish_name_arr.push(document.getElementById("dish_name"+x.toString()).value);
+						var emptyTT=""
+			   			if (x<9){
+							emptyTT="0"+(x+1).toString();
+						}
+						else{
+							emptyTT=x.toString();
+						}
+						db.collection("食譜").doc("02").collection(emptyWhat).doc(empty1).collection("ingredients").doc(emptyTT).set({
+			  				food:dish_name_fooP_arr[x].toString()+"："+dish_name_arr[x].toString()
+						});
+					})(i)
+				}
+
+				let part2_count_arr=[]
+				for(i=0;i<=part2_count;i++){
+					(function(x) {
+						part2_count_arr.push(document.getElementById("part2_"+x.toString()).value);
+						var emptyRR=""
+			   			if (x<9){
+							emptyRR="0"+(x+1).toString();
+						}
+						else{
+							emptyRR=x.toString();
+						}
+
+
+						db.collection("食譜").doc("02").collection(emptyWhat).doc(empty1).collection("steps").doc(emptyRR).set({
+			  				step:part2_count_arr[x].toString()
+						});
+					})(i)
+				}
+
+				for(i=0;i<=part4_count;i++){
+					(function(x) {
+						var emptyFF=""
+			   			if (x<9){
+							emptyFF="0"+(x+1).toString();
+						}
+						else{
+							emptyFF=x.toString();
+						}
+
+						if (x==0){
+							db.collection("食譜").doc("02").collection(emptyWhat).doc(empty1).collection("ingredients_EXTRA").doc(emptyFF).set({
+			  						food:" "+"："+" "
+								});
+						}
+						else{
+							db.collection("食譜").doc("02").collection(emptyWhat).doc(empty1).collection("ingredients_EXTRA").doc(emptyFF).set({
+			  						food:document.getElementById("finalll"+x.toString()).value.toString()+"："+document.getElementById("finalll_name"+x.toString()).value.toString()
+								});
+						}
+						
+					})(i)
+				}
+
+				for(i=0;i<=part3_count;i++){
+					(function(x) {
+						firebase.storage().ref().child('photo'+this_id.toString()+'/'+document.getElementById("add3_"+x.toString()).value).put(document.getElementById("add3_"+x.toString()).files[0]);
+						setTimeout("finalPicture("+x.toString()+")",3000)
+
+					})(i)
+				}
+				alert("食譜上傳成功")
+			});}
+	    	else{
+				alert("尚有欄位未填寫完畢")
+				judge=0;
+			}
+	    });
+	
+	
+
+    document.getElementById('choose2').addEventListener('click', function() {
+    	location.reload();
+    });
+
+    let dish_name_other = document.getElementById("dish_name_fooP0");
+	for(i=1;i<161;i++){
+	    (function(x) {
+	       	var g_block = document.getElementById("BK_"+x.toString()+"_0")
+	        g_block.addEventListener('click', function() {
+	            dish_name_other.placeholder=g_block.innerHTML;
+	            other.style.cssText  = 'display:none;';
+	    		add1.style.cssText  = 'display: contents; font-size:30px;';
+	    		add2.style.cssText  = 'display: contents; font-size:30px;';
+	    		other.style.cssText  = 'display:none;';  
+	        });
+	    })(i)
+	}
+
+</script>
+</html>

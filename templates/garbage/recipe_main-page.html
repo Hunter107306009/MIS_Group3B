@@ -1,0 +1,518 @@
+<!--記得註釋--> 
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>食譜總頁</title>
+	<script src="https://kit.fontawesome.com/2a7c44bc88.js" crossorigin="anonymous"></script>
+	<style>
+		/*統一規範*/
+		body{
+			font-family: 'Noto Sans TC', sans-serif;
+		}
+
+		#main-cut{
+			position:absolute;
+		}
+
+		/*header設定*/
+		#header{
+			height:9vh;
+			width:100vw;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			box-shadow:2px 2px 2px 2px #cccccc;
+			opacity:0.9;
+		}
+
+		#undo{
+			margin-left:40px;
+			margin-right:250px;
+		}
+
+		#head_font{
+			font-size:65px;
+		}
+
+
+		/*區塊範例*/
+		#Contents{
+			display:flex;
+			flex-direction:column;
+			justify-content:start;
+			align-items:center;
+			width:100vw;
+			margin-top: 0px;
+			overflow: auto;
+			scrollbar-width: none;
+		}
+
+		#Contents::-webkit-scrollbar{
+			display: none;
+		}
+
+		#unite_font{
+			margin-left:20px;
+			font-size:50px;
+			position: relative;
+			display: flex;
+		}
+
+		/*#title{
+			margin: 50px;
+		}
+		*/
+		h1{
+			font-size: 50px;
+			margin-left:5vw;
+			margin-top: 10px;
+			margin-bottom: -20px;
+		}
+		/*.item{
+			display: flex;
+		}
+		.item .pic{
+			height: 50%;
+		}
+
+		.item .pic img{
+
+		}
+		*/
+		.item{
+			width: 380px;
+			height: 380px;
+			margin: auto;
+			display: flex;
+			flex-direction: column;
+			background-color: #eee;
+			border-radius: 20px;
+			overflow-y: hidden;
+			scrollbar-width: none;
+			/*border: 1px solid #888;*/
+			/*box-shadow: 0 10px 30px  rgba(160, 0, 0, .5);*/
+		}
+		.item::-webkit-scrollbar{
+			display: none;
+		}
+		.item .pic{
+			height: 80%;
+		}
+		.item .pic img{
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-top-left-radius: 20px;
+			border-top-right-radius: 20px;
+		}
+		.item .txt{
+			height: 20%;
+			/*box-sizing: border-box;*/
+			display: flex;
+			color: #000;
+			text-align: center;
+			align-items: center;
+			/*flex-direction: column;*/
+			justify-content: center;
+		}
+		.item .txt h2{	
+			line-height: 1;
+			font-size: 50px;
+
+		}
+		a{
+			text-decoration: none;
+			padding: 10px;
+		}
+
+		/*微型選單部分*/
+		#small_menu_frame{
+			height:25vh;
+			width:95%;
+			border-radius:20px;
+			border-color:#E0E0E0;
+			border-style:solid;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			align-items:center;
+			margin-bottom:20px;
+			margin-top:20px;
+			box-shadow:2px 2px 2px 2px #cccccc;
+			white-space: nowrap;
+			overflow: auto;
+		}
+
+		/*側邊選單*/
+		#side-menu-frame{
+			position:absolute;
+			display:flex;
+			flex-direction:row;
+			justify-content:start;
+			height:91vh;
+		}
+
+		#side-menu{
+			width:30vw;
+			height:100%;
+			background-image:linear-gradient(0deg,#8E8E8E,#3C3C3C);
+			display:none;
+			flex-direction:column;
+			align-items:center;
+			box-shadow:10px 0px 10px hsla(240,40%,20%,.6);
+		}
+
+		#side-menu nav a{
+			display:block;
+			padding:30px;
+			color:#FCFCFC;
+			text-decoration:none;
+			font-size:30px;
+			border-bottom:outset;
+			
+		}
+
+		#side-paste{
+			width:70vw;
+			height:100%;
+			background-color:#6C6C6C;
+			display:none;
+			opacity:0.4;
+		}
+
+		/*
+		#side-menu nav a i{
+			margin-right:-1.3em;
+			transform:scale(0);
+			transition:.3s;
+		}
+
+		#side-menu nav a:onclick i{
+			margin-right:0em;
+			transform:scale(1);
+		}
+		*/
+	</style>
+	<!--藝術字體--> 
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+	<!--思源黑體--> 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+</head>
+
+<body style="background-color:#E0E0E0">
+	<div id="header" style="background-color:#3C3C3C">
+		<i class="fas fa-bars" id="undo" style="color:#FCFCFC; font-size:50px;"></i>
+		<div id="head_font" style="color:#FCFCFC">食譜目錄</div>
+	</div>
+
+	<div id="main-cut">
+		<h1>早餐、輕食</h1>
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\11aaeaadc20242ac110005.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>蘿蔔糕</h2>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\如何-煎出-金黃色-好吃-法式吐司.png" alt="">
+							</div>
+							<div class="txt">
+								<h2>法式吐司</h2>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<h1>中式</h1>		
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\gy67-008.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>蚵仔煎</h2>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\30b1c388b4acd744.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>黑胡椒牛肉</h2>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\4e78e6c862fe3296.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>鳳梨蝦球</h2>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\1118717746_m.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>麻婆豆腐</h2>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\whk096-036b.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>蛋炒飯</h2>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>			
+		</div>
+		<h1>日式</h1>		
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\IMG_1451-proc.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>唐揚炸雞</h2>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\index.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>日式烏龍</h2>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="btn">
+						<div class="item">
+							<div class="pic">
+								<img src="image\gy55-037a.jpg" alt="">
+							</div>
+							<div class="txt">
+								<h2>馬鈴薯燉肉</h2>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>			
+		</div>
+			<h1>西式</h1>
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">範例區塊4</div>
+			</div>			
+		</div>
+		<h1>韓式</h1>		
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">範例區塊5</div>
+			</div>			
+		</div>
+		<h1>湯品</h1>		
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">範例區塊6</div>
+			</div>			
+		</div>
+		<h1>東南亞</h1>		
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">範例區塊7</div>
+			</div>
+		</div>
+		<h1>甜點、點心</h1>		
+		<div id="Contents">
+			<div id="small_menu_frame" style="background-color:#FCFCFC;">
+				<div id="unite_font">範例區塊8</div>
+			</div>
+		</div>
+		
+	</div>
+		<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+		<script>
+			//檔案上傳
+		    var firebaseConfig = {
+			    apiKey: "AIzaSyD7tE_NRFk7SenBFUkUCH3WgFdaKQcX304",
+			    authDomain: "test-4fa88.firebaseapp.com",
+			    databaseURL: "https://test-4fa88-default-rtdb.asia-southeast1.firebasedatabase.app",
+			    projectId: "test-4fa88",
+			    storageBucket: "test-4fa88.appspot.com",
+			    messagingSenderId: "951903532283",
+			    appId: "1:951903532283:web:7d9c1c38cd632fb471ac5e",
+			    measurementId: "G-NSP6DRS2MS"
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+
+		    let db=firebase.firestore();
+
+		    let main = document.getElementById('main-cut');
+		    for(i=1;i<=8;i++){
+		    	(function(x) {
+		    		var h = document.createElement("h1");
+			    	if (x==1){
+			    		h.innerHTML="中式料理"
+			    	}
+			    	if (x==2){
+			    		h.innerHTML="日式料理"
+			    	}
+			    	if (x==3){
+			    		h.innerHTML="早餐輕食"
+			    	}
+			    	if (x==4){
+			    		h.innerHTML="東南亞料理"
+			    	}
+			    	if (x==5){
+			    		h.innerHTML="湯品"
+			    	}
+			    	if (x==6){
+			    		h.innerHTML="甜點點心"
+			    	}
+			    	if (x==7){
+			    		h.innerHTML="西式料理"
+			    	}
+			    	if (x==8){
+			    		h.innerHTML="韓式料理"
+			    	}
+			    	var div1 = document.createElement("div");
+			    	div1.setAttribute("id", "Contents");
+			    	var div2 = document.createElement("div");
+			    	div2.setAttribute("id", "small_menu_frame");
+			    	div2.setAttribute("style", "background-color:#FCFCFC;");
+
+			    	var main_count = 0;
+			    	var empty1=""
+			    	db.collection("食譜").doc("01").collection(h.innerHTML.toString()).get().then(snap => {
+			    		main_count = 3;
+			    		for(i=1;i<=main_count;i++){
+			    			(function(x) {
+			    				var emptyTT=""
+					   			if (x<10){
+									emptyTT="0"+x.toString();
+								}
+								else{
+									emptyTT=x.toString();
+								}
+								var a = document.createElement("a");
+						    	a.setAttribute("class", "btn");
+						    	var div3 = document.createElement("div");
+						    	div3.setAttribute("class", "item");
+						    	var div4 = document.createElement("div");
+						    	div4.setAttribute("class", "pic");
+						    	var img = document.createElement("img");
+						    	img.setAttribute("src", db.collection("食譜").doc("01").collection(h.innerHTML.toString()).doc(empty1).collection("link").doc("01").ref("link"));
+						    	var div5 = document.createElement("div");
+						    	div5.setAttribute("class", "txt");
+						    	var h2 = document.createElement("h2");
+						    	div5.innerHTML=db.collection("食譜").doc("01").collection(h.innerHTML.toString()).doc(empty1).ref("name");
+						    	div5.appendChild(h2);
+						    	div3.appendChild(div4);
+						    	div3.appendChild(div5);
+						    	a.appendChild(div3);
+						    	div2.appendChild(a);
+					    	})(i)
+			    		}
+			   			
+			    	div1.appendChild(div2);
+			    	main.appendChild(h);
+			   	 	main.appendChild(div1);
+		   	 	})(i)
+		    }
+		</script>
+
+
+	
+	<div id="side-menu-frame">
+		<div id="side-menu">
+			<nav>
+				<a href="#">
+					<i class="fas fa-home"></i>
+					首頁
+				</a>
+				<a href="#">
+					<i class="fas fa-book"></i>
+					食譜目錄
+				</a>
+				<a href="#">
+					<i class="fas fa-fish"></i>
+					食材目錄
+				</a>
+				<a href="#">
+					<i class="fas fa-heart"></i>
+					我的最愛
+				</a>
+				<a href="#">
+					<i class="fas fa-share-square"></i>
+					分享食譜
+				</a>
+				<a href="#">
+					<i class="fas fa-shopping-cart"></i>
+					購物車
+				</a>
+			</nav>
+		</div>
+		<div id="side-paste">
+
+		</div>
+	</div>	
+</body>
+
+<script>
+	//選單彈出
+    let undo = document.getElementById('undo');
+    let side_menu = document.getElementById('side-menu');
+    let side_paste = document.getElementById('side-paste');
+    let click_count = 0;
+    undo.addEventListener('click', function() {
+        if (click_count % 2 == 0) {
+            side_menu.style.cssText = 'display:flex';
+            side_paste.style.cssText = 'display:flex';
+        }
+
+        if (click_count % 2 == 1) {
+            side_menu.style.cssText = 'display:none';
+            side_paste.style.cssText = 'display:none';
+        }
+
+        click_count = click_count + 1;
+    });
+</script>
+</html>
